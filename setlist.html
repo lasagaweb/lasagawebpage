@@ -70,6 +70,9 @@ h1{font-weight:800;font-size:clamp(36px,6vw,56px);letter-spacing:-.02em;line-hei
 .success-msg{text-align:center;padding:40px 0;margin:20px 0;border:1px solid var(--cream-line);border-radius:4px;background:rgba(212,165,116,.05)}
 .success-msg h3{font-family:var(--font-italic);font-style:italic;font-size:28px;color:var(--cream);font-weight:400;margin:0}
 .success-msg p{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber-bright);margin:12px 0 0}
+.float-vote{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);z-index:45;opacity:0;transition:transform 400ms cubic-bezier(.2,.7,.2,1),opacity 300ms;pointer-events:none}
+.float-vote.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto}
+.float-vote .btn-amber{padding:18px 40px;font-size:15px;box-shadow:0 1px 0 rgba(255,255,255,.20) inset,0 0 0 1px rgba(0,0,0,.10),0 20px 50px -10px rgba(168,100,60,.7),0 0 60px rgba(212,165,116,.3)}
 .footer{text-align:center;padding:60px 0 40px}
 .footer-link{display:inline-block;color:var(--cream);font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:12px 24px;border:1px solid var(--cream-line);border-radius:2px;transition:all 200ms;margin-bottom:24px}
 .footer-link:hover{border-color:var(--amber);color:var(--amber-bright)}
@@ -219,7 +222,11 @@ function App(){
       e("a",{href:"index.html",className:"footer-link"},"\u2190 Volver a La Saga"),
       e("br"),
       e("div",{className:"footer-sign"},"La Saga \u00b7 Montevideo")
-    )
+    ),
+
+    !sent&&selected.length>0?e("div",{className:"float-vote"+(selected.length>0?" show":"")},
+      e("button",{className:"btn-amber",onClick:submit},"Enviar mi voto ("+selected.length+")")
+    ):null
   );
 }
 
