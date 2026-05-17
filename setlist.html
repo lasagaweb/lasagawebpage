@@ -53,6 +53,12 @@ h1{font-weight:800;font-size:clamp(36px,6vw,56px);letter-spacing:-.02em;line-hei
 .rank-scroll::-webkit-scrollbar-track{background:transparent}
 .rank-scroll::-webkit-scrollbar-thumb{background:var(--amber);border-radius:3px}
 .rank-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--cream-line)}
+.rank-item.top5{background:rgba(212,165,116,.06);margin:0 -20px;padding:14px 20px;border-bottom:1px solid rgba(212,165,116,.15)}
+.rank-item.top5 .rank-pos{color:var(--amber-bright);font-size:28px}
+.rank-item.top5 .rank-song{color:var(--amber-bright)}
+.rank-item:not(.top5){opacity:.55}
+.rank-badge{font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--burgundy-900);background:var(--amber-bright);padding:2px 8px;border-radius:2px;margin-left:8px;white-space:nowrap}
+.rank-divider{text-align:center;padding:16px 0;font-family:var(--font-mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream-dim);border-bottom:1px solid var(--cream-line)}
 .rank-pos{font-family:var(--font-mono);font-size:24px;font-weight:700;color:var(--amber-bright);width:40px;text-align:center;flex-shrink:0}
 .rank-info{flex:1;min-width:0}
 .rank-song{font-weight:600;font-size:16px;color:var(--cream)}
@@ -150,21 +156,25 @@ function App(){
     // Ranking section (top)
     e("div",{className:"ranking"},
       e("h2",null,"RANKING EN VIVO"),
-      e("div",{className:"sub"},"As\u00ed va la votaci\u00f3n hasta ahora"),
+      e("div",{className:"sub"},"Las 5 m\u00e1s votadas entran al setlist del 17 de septiembre"),
       loadingRank
         ? e("div",{className:"loading"},"Cargando ranking...")
         : rankList.length>0
           ? e("div",{className:"rank-scroll"},rankList.map(function(item,i){
               var pct=Math.max(5,Math.round((item.votes/maxVotes)*100));
-              return e("div",{key:item.song,className:"rank-item"},
+              var isTop5=i<5;
+              var items=[e("div",{key:item.song,className:"rank-item"+(isTop5?" top5":"")},
                 e("div",{className:"rank-pos"},"#"+(i+1)),
                 e("div",{className:"rank-info"},
-                  e("div",{className:"rank-song"},item.song),
+                  e("div",{className:"rank-song"},item.song,isTop5?e("span",{className:"rank-badge"},"en el setlist"):null),
                   e("div",{className:"rank-album"},SONG_ALBUM[item.song]||""),
                   e("div",{className:"rank-bar-wrap"},e("div",{className:"rank-bar",style:{width:pct+"%"}}))
                 ),
                 e("div",{className:"rank-votes"},item.votes+" voto"+(item.votes!==1?"s":""))
-              )}))
+              )];
+              if(i===4&&rankList.length>5){items.push(e("div",{key:"divider",className:"rank-divider"},"fuera del setlist"))}
+              return items;
+            }))
           : e("div",{className:"loading"},"Todav\u00eda no hay votos. \u00a1S\u00e9 el primero!")
     ),
 
