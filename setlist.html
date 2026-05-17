@@ -45,10 +45,10 @@ h1{font-weight:800;font-size:clamp(36px,6vw,56px);letter-spacing:-.02em;line-hei
 .song.on .cbox svg{opacity:1}
 .sname{font-size:15px;font-weight:500;color:var(--cream)}
 .song.on .sname{color:var(--amber-bright)}
-.ranking{margin:48px 0}
+.ranking{margin:48px 0;text-align:center}
 .ranking h2{font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em;color:var(--cream);margin:0 0 8px}
 .ranking .sub{margin-bottom:32px}
-.rank-scroll{max-height:336px;max-width:70%;margin:0 auto;overflow-y:auto;border:1px solid var(--cream-line);border-radius:4px;padding:0 20px;scrollbar-width:thin;scrollbar-color:var(--amber) transparent}
+.rank-scroll{max-height:336px;max-width:90%;margin:0 auto;overflow-y:auto;border:1px solid var(--cream-line);border-radius:4px;padding:0 20px;scrollbar-width:thin;scrollbar-color:var(--amber) transparent}
 @media(max-width:700px){.rank-scroll{max-width:100%}}
 .rank-scroll::-webkit-scrollbar{width:6px}
 .rank-scroll::-webkit-scrollbar-track{background:transparent}
@@ -214,10 +214,6 @@ function App(){
           })
           )
         ),
-
-    e("div",{style:{textAlign:"center",padding:"48px 0 0"}},
-      e("a",{href:"https://redtickets.uy/evento/LA-SAGA-VUELVE/28134/",className:"btn-amber",target:"_blank",rel:"noopener"},"Reserv\u00e1 tu lugar")
-    ),
 
     e("div",{className:"footer"},
       e("a",{href:"index.html",className:"footer-link"},"\u2190 Volver a La Saga"),
