@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Saga — Arm&aacute; el Setlist</title>
+  <meta name="description" content="Eleg&iacute; las canciones que no pueden faltar el 17 de septiembre en Sala del Museo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+  <style>
+:root{--burgundy-950:#1a0606;--burgundy-900:#240a0a;--burgundy-800:#2a0a0a;--cream:#f5e6d0;--cream-dim:rgba(245,230,208,0.65);--cream-faint:rgba(245,230,208,0.18);--cream-line:rgba(245,230,208,0.14);--amber:#c8956c;--amber-bright:#d4a574;--font-display:"Outfit","Helvetica Neue",Helvetica,system-ui,sans-serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;--font-italic:"Cormorant Garamond",Georgia,serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);font-family:var(--font-display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.grain-overlay{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.42;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.90  0 0 0 0 0.81  0 0 0 1.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");background-size:220px 220px}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 35%,transparent 0%,transparent 45%,rgba(0,0,0,.45) 100%)}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px;position:relative;z-index:5}
+.header{text-align:center;padding:60px 0 40px}
+.header a{color:var(--cream);text-decoration:none;font-weight:800;letter-spacing:.04em;font-size:16px}
+.header a:hover{color:var(--amber-bright)}
+h1{font-weight:800;font-size:clamp(36px,6vw,56px);letter-spacing:-.02em;line-height:.9;margin:24px 0 0;color:var(--cream)}
+.sub{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber-bright);margin-top:16px}
+.counter-bar{position:sticky;top:0;z-index:40;background:rgba(26,6,6,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--cream-line);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;margin:0 -24px}
+.counter-text{font-family:var(--font-mono);font-size:13px;color:var(--cream)}
+.counter-text b{color:var(--amber-bright)}
+.btn-amber{display:inline-flex;align-items:center;padding:12px 24px;background:linear-gradient(180deg,var(--amber-bright) 0%,var(--amber) 100%);color:#1a0606;font-family:var(--font-display);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;border-radius:2px;border:1px solid rgba(255,255,255,.12);cursor:pointer;text-decoration:none;transition:transform 220ms,box-shadow 220ms,filter 220ms,opacity 220ms;box-shadow:0 1px 0 rgba(255,255,255,.20) inset,0 0 0 1px rgba(0,0,0,.10),0 12px 30px -12px rgba(168,100,60,.55)}
+.btn-amber:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.btn-amber:disabled{opacity:.4;cursor:default;transform:none;filter:none}
+.album{margin:40px 0}
+.album-head{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.album-cover{width:56px;height:56px;border-radius:3px;object-fit:cover;border:1px solid rgba(245,230,208,.06)}
+.album-name{font-weight:700;font-size:17px;color:var(--cream);line-height:1.2}
+.album-year{font-family:var(--font-mono);font-size:11px;color:var(--amber-bright);letter-spacing:.16em;margin-top:2px}
+.song{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:3px;cursor:pointer;transition:background 150ms;user-select:none}
+.song:hover{background:rgba(245,230,208,.04)}
+.song.on{background:rgba(212,165,116,.08)}
+.song.off{opacity:.35;cursor:default}.song.off:hover{background:transparent}
+.cbox{width:20px;height:20px;border:1.5px solid var(--cream-line);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 200ms}
+.song.on .cbox{background:var(--amber);border-color:var(--amber)}
+.cbox svg{width:12px;height:12px;opacity:0;transition:opacity 150ms}
+.song.on .cbox svg{opacity:1}
+.sname{font-size:15px;font-weight:500;color:var(--cream)}
+.song.on .sname{color:var(--amber-bright)}
+.ranking{margin:48px 0}
+.ranking h2{font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em;color:var(--cream);margin:0 0 8px}
+.ranking .sub{margin-bottom:32px}
+.rank-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--cream-line)}
+.rank-pos{font-family:var(--font-mono);font-size:24px;font-weight:700;color:var(--amber-bright);width:40px;text-align:center;flex-shrink:0}
+.rank-info{flex:1;min-width:0}
+.rank-song{font-weight:600;font-size:16px;color:var(--cream)}
+.rank-album{font-family:var(--font-mono);font-size:10px;color:var(--cream-dim);letter-spacing:.16em;margin-top:2px;text-transform:uppercase}
+.rank-bar-wrap{height:6px;background:rgba(245,230,208,.06);border-radius:3px;margin-top:8px;overflow:hidden}
+.rank-bar{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber-bright));border-radius:3px;transition:width 600ms ease}
+.rank-votes{font-family:var(--font-mono);font-size:12px;color:var(--cream-dim);flex-shrink:0;text-align:right;min-width:50px}
+.success-msg{text-align:center;padding:40px 0;margin:20px 0;border:1px solid var(--cream-line);border-radius:4px;background:rgba(212,165,116,.05)}
+.success-msg h3{font-family:var(--font-italic);font-style:italic;font-size:28px;color:var(--cream);font-weight:400;margin:0}
+.success-msg p{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber-bright);margin:12px 0 0}
+.footer{text-align:center;padding:60px 0 40px}
+.footer-link{display:inline-block;color:var(--cream);font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:12px 24px;border:1px solid var(--cream-line);border-radius:2px;transition:all 200ms;margin-bottom:24px}
+.footer-link:hover{border-color:var(--amber);color:var(--amber-bright)}
+.footer-sign{font-family:var(--font-mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--amber-bright)}
+.loading{text-align:center;padding:20px;font-family:var(--font-mono);font-size:12px;color:var(--cream-dim);letter-spacing:.2em}
+  </style>
+</head>
+<body>
+  <div class="vignette"></div>
+  <div class="grain-overlay"></div>
+  <div id="root"></div>
+  <script>
+"use strict";
+var e=React.createElement,useState=React.useState,useEffect=React.useEffect;
+
+var SCRIPT_URL="https://script.google.com/macros/s/AKfycbyA-FN1wgVGG1vMQ2EVwdhDAH7YZ38ATvpAyfuoZVA36PAeCWjxbsFF7xiBbBP892uksQ/exec";
+var MAX_VOTES=10;
+
+var ALBUMS=[
+{name:"\u00bfDe d\u00f3nde quer\u00e9s venir ma\u00f1ana?",year:"2003",cover:"https://i.scdn.co/image/ab67616d0000b273208828caa658e989e0e80360",
+songs:["Siete","Quince Minutos","De Cabeza","Por la Vuelta","Lo Que Viene Despu\u00e9s","Buscando Espacio","Podemos","Lo Que Puedo Darte","As\u00ed","Al Menos","Los Tipos"]},
+{name:"Quiero",year:"2005",cover:"https://i.scdn.co/image/ab67616d0000b273f739c4595ea0d5f11511fe15",
+songs:["Rareza","Adonde Nunca Fu\u00ed","Errante","Eso Que Nos Queda","Quiero","Suerte","Lo Que Vos Digas","Coincidencia","Paz","Quien Iba a Pensar","Salir"]},
+{name:"El Vendaval",year:"2010",cover:"https://i.scdn.co/image/ab67616d0000b273a1f41856d1dee8f3bc6c876f",
+songs:["Color","Ir","Once","Contrario","El Arte del Error","Telara\u00f1as","Donde Nada Importa","Fugaz","Las Historias del Silencio","Amanece"]},
+{name:"VOS",year:"2016",cover:"https://i.scdn.co/image/ab67616d0000b273f91852ebf424b47f3d16bbad",
+songs:["El Grito del Le\u00f3n","Estoy Perdido","Un Mundo Diferente","El Perfume de tu Cama","Vos","Eran Rayos","Versiones Encontradas","Somos Invisibles","D\u00e1ndole Vueltas","El Fin del Mundo"]}
+];
+
+// Build song-to-album lookup
+var SONG_ALBUM={};
+ALBUMS.forEach(function(a){a.songs.forEach(function(s){SONG_ALBUM[s]=a.name+" ("+a.year+")"})});
+
+function CheckSvg(){return e("svg",{viewBox:"0 0 12 12",fill:"none",stroke:"#1a0606",strokeWidth:"2.5",strokeLinecap:"round",strokeLinejoin:"round"},e("path",{d:"M2 6l3 3 5-5"}))}
+
+function App(){
+  var s1=useState([]),selected=s1[0],setSelected=s1[1];
+  var s2=useState(false),sent=s2[0],setSent=s2[1];
+  var s3=useState(null),ranking=s3[0],setRanking=s3[1];
+  var s4=useState(true),loadingRank=s4[0],setLoadingRank=s4[1];
+
+  // Load ranking on mount
+  useEffect(function(){
+    fetch(SCRIPT_URL+"?action=setlist_ranking",{mode:"cors"})
+      .then(function(r){return r.json()})
+      .then(function(data){if(data&&data.ranking){setRanking(data.ranking)}setLoadingRank(false)})
+      .catch(function(){setLoadingRank(false)});
+  },[]);
+
+  function toggle(song){
+    if(sent)return;
+    var i=selected.indexOf(song);
+    if(i!==-1){setSelected(selected.filter(function(s){return s!==song}))}
+    else if(selected.length<MAX_VOTES){setSelected(selected.concat([song]))}
+  }
+
+  function submit(){
+    if(selected.length===0||sent)return;
+    fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type:"setlist",songs:selected,timestamp:new Date().toISOString()})});
+    setSent(true);
+    // Update local ranking optimistically
+    if(ranking){
+      var updated={};Object.keys(ranking).forEach(function(k){updated[k]=ranking[k]});
+      selected.forEach(function(s){updated[s]=(updated[s]||0)+1});
+      setRanking(updated);
+    }
+  }
+
+  // Build sorted ranking
+  var rankList=[];
+  if(ranking){
+    Object.keys(ranking).forEach(function(k){rankList.push({song:k,votes:ranking[k]})});
+    rankList.sort(function(a,b){return b.votes-a.votes});
+  }
+  var maxVotes=rankList.length>0?rankList[0].votes:1;
+
+  return e("div",{className:"wrap"},
+    e("div",{className:"header"},
+      e("a",{href:"index.html"},"LA\u00a0SAGA"),
+      e("h1",null,"ARM\u00c1 EL SETLIST"),
+      e("div",{className:"sub"},"Eleg\u00ed hasta 10 canciones que no pueden faltar el 17 de septiembre")
+    ),
+
+    // Ranking section (top)
+    e("div",{className:"ranking"},
+      e("h2",null,"RANKING EN VIVO"),
+      e("div",{className:"sub"},"As\u00ed va la votaci\u00f3n hasta ahora"),
+      loadingRank
+        ? e("div",{className:"loading"},"Cargando ranking...")
+        : rankList.length>0
+          ? rankList.slice(0,15).map(function(item,i){
+              var pct=Math.max(5,Math.round((item.votes/maxVotes)*100));
+              return e("div",{key:item.song,className:"rank-item"},
+                e("div",{className:"rank-pos"},"#"+(i+1)),
+                e("div",{className:"rank-info"},
+                  e("div",{className:"rank-song"},item.song),
+                  e("div",{className:"rank-album"},SONG_ALBUM[item.song]||""),
+                  e("div",{className:"rank-bar-wrap"},e("div",{className:"rank-bar",style:{width:pct+"%"}}))
+                ),
+                e("div",{className:"rank-votes"},item.votes+" voto"+(item.votes!==1?"s":""))
+              )})
+          : e("div",{className:"loading"},"Todav\u00eda no hay votos. \u00a1S\u00e9 el primero!")
+    ),
+
+    // Success message or voting form
+    sent
+      ? e("div",{className:"success-msg"},
+          e("h3",null,"Gracias por votar."),
+          e("p",null,"Tu voto fue registrado")
+        )
+      : e(React.Fragment,null,
+          e("div",{className:"counter-bar"},
+            e("span",{className:"counter-text"},e("b",null,selected.length)," de ",e("b",null,MAX_VOTES)," elegidas"),
+            e("button",{className:"btn-amber",disabled:selected.length===0,onClick:submit},"Enviar mi voto")
+          ),
+          ALBUMS.map(function(album){
+            return e("div",{key:album.name,className:"album"},
+              e("div",{className:"album-head"},
+                e("img",{className:"album-cover",src:album.cover,alt:album.name}),
+                e("div",null,
+                  e("div",{className:"album-name"},album.name),
+                  e("div",{className:"album-year"},album.year)
+                )
+              ),
+              album.songs.map(function(song){
+                var isOn=selected.indexOf(song)!==-1;
+                var isOff=selected.length>=MAX_VOTES&&!isOn;
+                return e("div",{key:song,className:"song"+(isOn?" on":"")+(isOff?" off":""),onClick:function(){if(!isOff)toggle(song)}},
+                  e("div",{className:"cbox"},e(CheckSvg)),
+                  e("span",{className:"sname"},song)
+                )
+              })
+            )
+          })
+        ),
+
+    e("div",{className:"footer"},
+      e("a",{href:"index.html",className:"footer-link"},"\u2190 Volver a La Saga"),
+      e("br"),
+      e("div",{className:"footer-sign"},"La Saga \u00b7 Montevideo")
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(e(App));
+  </script>
+</body>
+</html>
