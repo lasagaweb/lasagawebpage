@@ -17,7 +17,7 @@ html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);f
 .grain-overlay{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.42;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.90  0 0 0 0 0.81  0 0 0 1.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");background-size:220px 220px}
 .vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 35%,transparent 0%,transparent 45%,rgba(0,0,0,.45) 100%)}
 .wrap{max-width:1000px;margin:0 auto;padding:0 24px;position:relative;z-index:5}
-.albums-grid{display:grid;grid-template-columns:1fr;gap:24px}
+.albums-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:800px;margin:0 auto}
 @media(min-width:700px){.albums-grid{grid-template-columns:1fr 1fr}}
 .header{text-align:center;padding:60px 0 40px}
 .header a{color:var(--cream);text-decoration:none;font-weight:800;letter-spacing:.04em;font-size:16px}
