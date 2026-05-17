@@ -13,9 +13,9 @@
   <style>
 :root{--burgundy-950:#1a0606;--burgundy-900:#240a0a;--burgundy-800:#2a0a0a;--cream:#f5e6d0;--cream-dim:rgba(245,230,208,0.65);--cream-faint:rgba(245,230,208,0.18);--cream-line:rgba(245,230,208,0.14);--amber:#c8956c;--amber-bright:#d4a574;--font-display:"Outfit","Helvetica Neue",Helvetica,system-ui,sans-serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;--font-italic:"Cormorant Garamond",Georgia,serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);font-family:var(--font-display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html,body{margin:0;padding:0;background:#351414;color:var(--cream);font-family:var(--font-display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .grain-overlay{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.42;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.90  0 0 0 0 0.81  0 0 0 1.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");background-size:220px 220px}
-.vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 35%,transparent 0%,transparent 45%,rgba(0,0,0,.45) 100%)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 35%,transparent 0%,transparent 55%,rgba(0,0,0,.2) 100%)}
 .wrap{max-width:1000px;margin:0 auto;padding:0 24px;position:relative;z-index:5}
 .albums-grid{display:grid;grid-template-columns:1fr;gap:48px;max-width:860px;margin:0 auto;padding:0 24px}
 @media(min-width:700px){.albums-grid{grid-template-columns:1fr 1fr;gap:64px}}
@@ -24,7 +24,7 @@ html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);f
 .header a:hover{color:var(--amber-bright)}
 h1{font-weight:800;font-size:clamp(36px,6vw,56px);letter-spacing:-.02em;line-height:.9;margin:24px 0 0;color:var(--cream)}
 .sub{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber-bright);margin-top:16px}
-.counter-bar{position:sticky;top:0;z-index:40;background:rgba(26,6,6,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--cream-line);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;margin:0 -24px}
+.counter-bar{position:sticky;top:0;z-index:40;background:rgba(53,20,20,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--cream-line);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;margin:0 -24px}
 .counter-text{font-family:var(--font-mono);font-size:13px;color:var(--cream)}
 .counter-text b{color:var(--amber-bright)}
 .btn-amber{display:inline-flex;align-items:center;padding:12px 24px;background:linear-gradient(180deg,var(--amber-bright) 0%,var(--amber) 100%);color:#1a0606;font-family:var(--font-display);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;border-radius:2px;border:1px solid rgba(255,255,255,.12);cursor:pointer;text-decoration:none;transition:transform 220ms,box-shadow 220ms,filter 220ms,opacity 220ms;box-shadow:0 1px 0 rgba(255,255,255,.20) inset,0 0 0 1px rgba(0,0,0,.10),0 12px 30px -12px rgba(168,100,60,.55)}
