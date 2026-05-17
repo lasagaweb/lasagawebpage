@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Saga — Vuelve · 17 de Septiembre · Sala del Museo</title>
+  <meta name="description" content="La Saga vuelve a los escenarios. 17 de septiembre de 2026, Sala del Museo del Carnaval, Montevideo. Banda de rock uruguaya con 6 discos editados y un disco de oro.">
+  <meta property="og:title" content="La Saga Vuelve — 17 de Septiembre 2026">
+  <meta property="og:description" content="La Saga vuelve a los escenarios. Sala del Museo del Carnaval, Montevideo. 1100 personas.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lasagaweb.github.io">
+  <meta property="og:locale" content="es_UY">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+  <style>
+:root{--burgundy-950:#1a0606;--burgundy-900:#240a0a;--burgundy-800:#2a0a0a;--burgundy-700:#361010;--burgundy-600:#4a1515;--cream:#f5e6d0;--cream-soft:#ede0c8;--cream-dim:rgba(245,230,208,0.65);--cream-faint:rgba(245,230,208,0.18);--cream-line:rgba(245,230,208,0.14);--amber:#c8956c;--amber-bright:#d4a574;--amber-deep:#a87850;--font-display:"Outfit","Helvetica Neue",Helvetica,system-ui,sans-serif;--font-body:"Outfit","Helvetica Neue",Helvetica,system-ui,sans-serif;--font-mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;--font-italic:"Cormorant Garamond",Georgia,serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);font-family:var(--font-body);font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.grain-overlay{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.42;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.90  0 0 0 0 0.81  0 0 0 1.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");background-size:220px 220px}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at 50% 35%,transparent 0%,transparent 45%,rgba(0,0,0,.45) 100%)}
+.hero-glow{position:absolute;inset:-10% -10% auto -10%;height:70%;background:radial-gradient(ellipse 60% 80% at 50% 30%,rgba(168,60,40,.42) 0%,transparent 60%),radial-gradient(ellipse 100% 80% at 50% 60%,rgba(200,149,108,.10) 0%,transparent 60%);filter:blur(20px);pointer-events:none;z-index:0}
+.wordmark{font-family:var(--font-display);font-weight:800;letter-spacing:-.04em;line-height:.85;color:var(--cream)}
+.outline-text{-webkit-text-stroke:2.5px var(--cream);color:transparent;font-family:var(--font-display);font-weight:800;letter-spacing:-.02em;line-height:.85}
+@media(min-width:1024px){.outline-text{-webkit-text-stroke-width:3.5px}}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--amber-bright)}
+.section-title{font-family:var(--font-display);font-weight:800;letter-spacing:-.02em;font-size:clamp(48px,7vw,96px);line-height:.9;color:var(--cream);margin:0}
+.btn-amber{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;background:linear-gradient(180deg,var(--amber-bright) 0%,var(--amber) 100%);color:#1a0606;font-family:var(--font-display);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:14px;border-radius:2px;border:1px solid rgba(255,255,255,.12);cursor:pointer;text-decoration:none;transition:transform 220ms ease,box-shadow 220ms ease,filter 220ms ease;box-shadow:0 1px 0 rgba(255,255,255,.20) inset,0 0 0 1px rgba(0,0,0,.10),0 18px 40px -16px rgba(168,100,60,.55)}
+.btn-amber:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 1px 0 rgba(255,255,255,.28) inset,0 0 0 1px rgba(0,0,0,.10),0 22px 50px -16px rgba(212,165,116,.7),0 0 38px rgba(212,165,116,.25)}
+.btn-amber--sm{padding:12px 20px;font-size:12px}
+.link-amber{color:var(--amber-bright);text-decoration:none;position:relative;transition:color 200ms ease}
+.link-amber::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--amber);transform:scaleX(0);transform-origin:left;transition:transform 240ms ease}
+.link-amber:hover::after{transform:scaleX(1)}
+.la-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 32px;transition:background 300ms ease,padding 300ms ease,border-color 300ms ease;border-bottom:1px solid transparent}
+.la-nav.scrolled{background:rgba(26,6,6,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:14px 32px;border-bottom-color:var(--cream-line)}
+.la-nav__brand{font-family:var(--font-display);font-weight:800;letter-spacing:.04em;font-size:16px;color:var(--cream);text-decoration:none}
+.la-nav__links{display:none;gap:32px}
+@media(min-width:900px){.la-nav__links{display:flex}}
+.la-nav__link{font-family:var(--font-display);font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);text-decoration:none;transition:color 200ms ease}
+.la-nav__link:hover{color:var(--amber-bright)}
+.la-nav__cta-group{display:flex;align-items:center;gap:18px}
+.la-nav__list-link{display:none;font-family:var(--font-display);font-size:13px;font-weight:500;letter-spacing:.08em;color:var(--cream);text-decoration:none;border-bottom:1px dashed var(--cream-faint);padding-bottom:2px;transition:color 200ms ease,border-color 200ms ease}
+.la-nav__list-link:hover{color:var(--amber-bright);border-color:var(--amber)}
+@media(min-width:1100px){.la-nav__list-link{display:inline-block}}
+.la-nav__cta{padding:10px 18px;font-size:12px}
+.la-burger{display:inline-flex;flex-direction:column;gap:5px;width:28px;background:none;border:0;cursor:pointer;padding:6px}
+.la-burger span{display:block;height:1.5px;width:100%;background:var(--cream);transition:transform 220ms ease,opacity 220ms ease}
+@media(min-width:900px){.la-burger{display:none}}
+.la-mobile-sheet{position:fixed;inset:0;z-index:49;background:rgba(26,6,6,.96);backdrop-filter:blur(20px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:24px;opacity:0;pointer-events:none;transition:opacity 240ms ease}
+.la-mobile-sheet.open{opacity:1;pointer-events:auto}
+.la-mobile-sheet a{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:.02em;color:var(--cream);text-decoration:none}
+.la-mobile-sheet a:hover{color:var(--amber-bright)}
+.container{width:100%;max-width:1280px;margin:0 auto;padding:0 28px}
+@media(min-width:768px){.container{padding:0 48px}}
+.section{position:relative;padding:120px 0;z-index:5}
+@media(max-width:720px){.section{padding:88px 0}}
+.section--darker{background:linear-gradient(180deg,var(--burgundy-900) 0%,var(--burgundy-950) 60%,var(--burgundy-900) 100%)}
+.section-head{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;margin-bottom:64px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px;overflow:hidden;z-index:3}
+.hero__wordmark{font-size:clamp(96px,22vw,320px)}
+.hero__vuelve{margin-top:4px;font-size:clamp(56px,14vw,200px)}
+.hero__meta{margin-top:36px;font-family:var(--font-mono);font-size:clamp(11px,1.4vw,14px);letter-spacing:.28em;color:var(--cream-dim);text-transform:uppercase}
+.hero__meta b{color:var(--cream);font-weight:500}
+.hero__countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:44px auto 0;max-width:560px;width:100%}
+.cd-cell{display:flex;flex-direction:column;align-items:center;padding:18px 6px;border:1px solid var(--cream-line);background:rgba(245,230,208,.02);border-radius:2px}
+.cd-cell__num{font-family:var(--font-mono);font-size:clamp(28px,5vw,48px);font-weight:600;font-variant-numeric:tabular-nums;color:var(--cream);letter-spacing:-.02em;line-height:1}
+.cd-cell__lbl{margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber-bright)}
+.hero__cta-row{margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.hero__sub{font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream-dim)}
+.hero__scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream-dim)}
+.hero__scroll-line{display:block;width:1px;height:38px;background:linear-gradient(180deg,var(--cream-faint),transparent);animation:scroll-pulse 2.4s ease-in-out infinite}
+@keyframes scroll-pulse{0%,100%{transform:scaleY(.7);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+.lista-section{position:relative;z-index:5;padding:80px 0;background:linear-gradient(180deg,var(--burgundy-900) 0%,var(--burgundy-950) 100%);border-top:1px solid var(--cream-line);border-bottom:1px solid var(--cream-line)}
+.lista{text-align:center;max-width:640px;margin:0 auto}
+.lista__title{font-family:var(--font-display);font-size:clamp(28px,4.2vw,44px);font-weight:600;color:var(--cream);letter-spacing:-.01em;line-height:1.15;margin:0}
+.lista__sub{font-family:var(--font-mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber-bright);margin-top:18px}
+.lista__form{margin-top:36px;display:flex;gap:8px;flex-direction:column}
+.lista__form--stack{gap:12px;max-width:420px;margin-left:auto;margin-right:auto}
+
+.lista__input{flex:1;background:transparent;border:1px solid var(--cream-line);padding:16px 20px;color:var(--cream);font-family:var(--font-display);font-size:15px;border-radius:2px;outline:none;transition:border-color 200ms ease}
+.lista__input::placeholder{color:var(--cream-dim)}
+.lista__input:focus{border-color:var(--amber)}
+.lista__submit{padding:16px 28px}
+.lista__success{font-family:var(--font-display);font-size:20px;color:var(--cream);letter-spacing:.01em}
+.lista__success::before{content:"\2726";color:var(--amber-bright);margin-right:12px;font-size:16px}
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:48;background:rgba(26,6,6,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--cream-line);padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:12px;transform:translateY(100%);transition:transform 400ms cubic-bezier(.2,.7,.2,1)}
+.sticky-bar.visible{transform:translateY(0)}
+.sticky-bar__text{font-family:var(--font-display);font-size:14px;font-weight:500;color:var(--cream);white-space:nowrap}
+.sticky-bar__input{background:transparent;border:1px solid var(--cream-line);padding:10px 16px;color:var(--cream);font-family:var(--font-display);font-size:14px;border-radius:2px;outline:none;width:220px;max-width:40vw;transition:border-color 200ms ease}
+.sticky-bar__input::placeholder{color:var(--cream-dim)}
+.sticky-bar__input:focus{border-color:var(--amber)}
+.sticky-bar__success{font-family:var(--font-display);font-size:14px;color:var(--amber-bright)}
+@media(max-width:600px){.sticky-bar{flex-wrap:wrap;gap:8px}.sticky-bar__text{font-size:12px;width:100%;text-align:center}.sticky-bar__input{max-width:none;flex:1}}
+.banda-carousel{position:relative;overflow:hidden;margin:0 -28px}
+@media(min-width:768px){.banda-carousel{margin:0 -48px}}
+.banda-track{display:flex;gap:16px;padding:0 28px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.banda-track::-webkit-scrollbar{display:none}
+.banda-slide{flex:0 0 80%;max-width:600px;scroll-snap-align:center;aspect-ratio:3/2;border-radius:4px;overflow:hidden;position:relative;background:linear-gradient(155deg,#1a0606 0%,#2a0a0a 60%,#3a1010 100%);border:1px solid rgba(245,230,208,.06);display:flex;align-items:center;justify-content:center;transition:transform 380ms cubic-bezier(.2,.7,.2,1)}
+@media(min-width:768px){.banda-slide{flex:0 0 55%}}
+@media(min-width:1100px){.banda-slide{flex:0 0 42%}}
+.banda-slide::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(245,230,208,.025) 0 1px,transparent 1px 6px)}
+.banda-slide__label{font-family:var(--font-mono);font-size:10px;letter-spacing:.28em;color:var(--cream-faint);text-transform:uppercase;z-index:1}
+.banda-slide:hover{transform:scale(1.02)}
+.banda-members{display:flex;flex-wrap:wrap;justify-content:center;gap:24px 40px;margin-top:48px}
+.banda-member{text-align:center}
+.banda-member__name{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--cream)}
+.banda-member__instr{font-family:var(--font-mono);font-size:10px;letter-spacing:.24em;color:var(--amber-bright);text-transform:uppercase;margin-top:4px}
+.disc-grid{display:grid;grid-template-columns:1fr;gap:40px 28px}
+@media(min-width:640px){.disc-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.disc-grid{grid-template-columns:repeat(3,1fr)}}
+.disc{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.disc__cover{position:relative;width:100%;aspect-ratio:1/1;background:radial-gradient(ellipse at 30% 25%,rgba(245,230,208,.06),transparent 60%),linear-gradient(140deg,#2a0a0a 0%,#1a0606 100%);border-radius:3px;border:1px solid rgba(245,230,208,.06);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;transition:transform 420ms cubic-bezier(.2,.7,.2,1),box-shadow 420ms ease;overflow:hidden;text-decoration:none}
+.disc__cover::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 4px);pointer-events:none;opacity:.5}
+.disc__cover-title{font-family:var(--font-display);font-size:clamp(18px,2.4vw,26px);font-weight:700;color:var(--cream);letter-spacing:-.01em;line-height:1.05;position:relative;z-index:1}
+.disc__gold-badge{position:absolute;top:14px;right:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.24em;color:var(--amber-bright);border:1px solid var(--amber);padding:4px 8px;border-radius:999px;text-transform:uppercase;background:rgba(26,6,6,.55);z-index:1}
+.disc:hover .disc__cover{transform:translateY(-6px);box-shadow:0 30px 60px -28px rgba(0,0,0,.8),0 0 0 1px rgba(212,165,116,.2),0 0 60px -20px rgba(212,165,116,.3)}
+.disc__meta{display:flex;align-items:baseline;justify-content:space-between;width:100%;gap:12px}
+.disc__name{font-family:var(--font-display);font-size:17px;font-weight:600;color:var(--cream)}
+.disc__year{font-family:var(--font-mono);font-size:13px;color:var(--amber-bright);letter-spacing:.08em}
+.disc__listen{font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--amber-bright);text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color 200ms ease,color 200ms ease}
+.disc__listen:hover{border-color:var(--amber);color:var(--amber)}
+.disc__listen::before{content:"\2192";font-family:var(--font-display);font-size:14px;transform:translateY(-1px)}
+.videos-grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:900px){.videos-grid{grid-template-columns:1fr 1fr}.videos-grid>*:nth-child(1){grid-column:span 2}}
+.video{display:flex;flex-direction:column;gap:14px}
+.video__frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:3px;border:1px solid rgba(245,230,208,.06);overflow:hidden}
+.video__frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video__title{font-family:var(--font-display);font-size:15px;font-weight:500;color:var(--cream);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.video__title-meta{font-family:var(--font-mono);font-size:11px;color:var(--amber-bright);letter-spacing:.16em}
+.contacto{text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+.contacto__line{font-family:var(--font-display);font-size:clamp(15px,1.6vw,17px);color:var(--cream)}
+.contacto__lbl{color:var(--cream-dim);margin-right:14px;font-family:var(--font-mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+.footer{position:relative;padding:80px 24px 100px;text-align:center;z-index:5}
+.footer__divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--cream-line) 30%,var(--cream-line) 70%,transparent);margin-bottom:50px}
+.footer__socials{display:flex;justify-content:center;gap:32px;margin-bottom:50px}
+.footer__social{color:var(--cream);transition:color 220ms ease,transform 220ms ease;text-decoration:none}
+.footer__social:hover{color:var(--amber-bright);transform:translateY(-2px)}
+.footer__social svg{width:22px;height:22px}
+.footer__thanks{font-family:var(--font-italic);font-style:italic;font-weight:400;font-size:clamp(24px,3.4vw,38px);color:var(--cream);letter-spacing:.01em}
+.footer__sign{margin-top:18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--amber-bright)}
+.playlist-cta{text-align:center;margin-top:48px}
+.playlist-cta a{font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-bright);text-decoration:none;padding:12px 24px;border:1px solid var(--cream-line);border-radius:2px;transition:all 200ms ease;display:inline-block}
+.playlist-cta a:hover{border-color:var(--amber);color:var(--amber)}
+  </style>
+</head>
+<body>
+  <div class="vignette"></div>
+  <div class="grain-overlay"></div>
+  <div id="root"></div>
+  <script>
+"use strict";
+var e=React.createElement,useState=React.useState,useEffect=React.useEffect,useRef=React.useRef;
+function Reveal(p){var ref=useRef(null),s=useState(false),shown=s[0],setShown=s[1];useEffect(function(){var node=ref.current;if(!node)return;var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){setShown(true);io.unobserve(node)}})},{threshold:.12,rootMargin:"0px 0px -60px 0px"});io.observe(node);return function(){io.disconnect()}},[]);return e(p.as||"div",{id:p.id,ref:ref,className:"reveal "+(shown?"in ":"")+(p.className||""),style:Object.assign({transitionDelay:(p.delay||0)+"ms"},p.style||{})},p.children)}
+function InstagramIcon(){return e("svg",{viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"1.6"},e("rect",{x:3,y:3,width:18,height:18,rx:5}),e("circle",{cx:12,cy:12,r:4}),e("circle",{cx:17.5,cy:6.5,r:1,fill:"currentColor",stroke:"none"}))}
+function SpotifyIcon(){return e("svg",{viewBox:"0 0 24 24",fill:"currentColor"},e("path",{d:"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.5 14.4a.7.7 0 0 1-.96.24c-2.64-1.62-5.97-1.98-9.9-1.08a.7.7 0 0 1-.31-1.36c4.3-.99 7.98-.57 10.93 1.24.32.2.42.64.24.96zm1.2-2.67a.87.87 0 0 1-1.2.3c-3.02-1.86-7.63-2.4-11.21-1.32a.87.87 0 1 1-.5-1.66c4.07-1.22 9.16-.62 12.61 1.5.41.25.54.79.3 1.18zm.1-2.78c-3.63-2.16-9.6-2.36-13.06-1.31a1.05 1.05 0 1 1-.6-2.01c3.99-1.21 10.57-.97 14.74 1.5a1.05 1.05 0 1 1-1.08 1.82z"}))}
+function YoutubeIcon(){return e("svg",{viewBox:"0 0 24 24",fill:"currentColor"},e("path",{d:"M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"}))}
+function mgmtEmail(){return["castello","adrian"].join(".")+String.fromCharCode(64)+"gmail.com"}
+
+function Nav(){var s1=useState(false),scrolled=s1[0],setScrolled=s1[1],s2=useState(false),mobileOpen=s2[0],setMobileOpen=s2[1];useEffect(function(){var f=function(){setScrolled(window.scrollY>50)};f();window.addEventListener("scroll",f,{passive:true});return function(){window.removeEventListener("scroll",f)}},[]);var close=function(){setMobileOpen(false)};return e(React.Fragment,null,e("nav",{className:"la-nav "+(scrolled?"scrolled":"")},e("a",{href:"#hero",className:"la-nav__brand",onClick:close},"LA\u00a0SAGA"),e("div",{className:"la-nav__links"},e("a",{href:"#banda",className:"la-nav__link"},"La\u00a0Banda"),e("a",{href:"#discos",className:"la-nav__link"},"Discos"),e("a",{href:"#videos",className:"la-nav__link"},"Videos"),e("a",{href:"#contacto",className:"la-nav__link"},"Contacto")),e("div",{className:"la-nav__cta-group"},e("a",{href:"#lista",className:"la-nav__list-link"},"Sumate a la lista"),e("a",{href:"#tickets",className:"btn-amber la-nav__cta"},"Consegu\u00ed tu lugar"),e("button",{className:"la-burger","aria-label":"Men\u00fa",onClick:function(){setMobileOpen(!mobileOpen)}},e("span",{style:mobileOpen?{transform:"translateY(6.5px) rotate(45deg)"}:{}}),e("span",{style:mobileOpen?{opacity:0}:{}}),e("span",{style:mobileOpen?{transform:"translateY(-6.5px) rotate(-45deg)"}:{}})))),e("div",{className:"la-mobile-sheet "+(mobileOpen?"open":"")},e("a",{href:"#banda",onClick:close},"La Banda"),e("a",{href:"#discos",onClick:close},"Discos"),e("a",{href:"#videos",onClick:close},"Videos"),e("a",{href:"#lista",onClick:close},"Sumate a la lista"),e("a",{href:"#contacto",onClick:close},"Contacto")))}
+
+function Hero(){var target=new Date("2026-09-17T23:00:00Z").getTime(),s=useState(Date.now()),now=s[0],setNow=s[1];useEffect(function(){var id=setInterval(function(){setNow(Date.now())},1000);return function(){clearInterval(id)}},[]);var diff=Math.max(0,target-now),days=Math.floor(diff/86400000),hours=Math.floor((diff%86400000)/3600000),mins=Math.floor((diff%3600000)/60000),secs=Math.floor((diff%60000)/1000),pad=function(n,w){return String(n).padStart(w||2,"0")};function Cell(num,label,w){return e("div",{className:"cd-cell"},e("div",{className:"cd-cell__num"},pad(num,w||2)),e("div",{className:"cd-cell__lbl"},label))}return e("section",{id:"hero",className:"hero"},e("div",{className:"hero-glow"}),e("div",{className:"hero__wordmark wordmark"},"LA SAGA"),e("div",{className:"hero__vuelve outline-text"},"VUELVE"),e("div",{className:"hero__meta"},e("b",null,"Setiembre 17")," \u00a0\u00b7\u00a0 ",e("b",null,"20HS")," \u00a0\u00b7\u00a0 Sala del Museo del Carnaval \u00a0\u00b7\u00a0 Montevideo"),e("div",{className:"hero__countdown",role:"timer"},Cell(days,"d\u00edas",3),Cell(hours,"horas"),Cell(mins,"min"),Cell(secs,"seg")),e("div",{className:"hero__cta-row"},e("a",{href:"#tickets",className:"btn-amber"},"Consegu\u00ed tu lugar"),e("div",{className:"hero__sub"},"Apertura: Agus Ruete \u00a0\u00b7\u00a0 Entradas por RedTickets")),e("div",{className:"hero__scroll","aria-hidden":true},e("span",null,"Scroll"),e("span",{className:"hero__scroll-line"})))}
+
+var SLIDES=[{img:"img/banda-01.jpg",alt:"La Saga - La banda completa"},{img:"img/banda-02.jpg",alt:"La Saga - En el estudio"},{img:"img/banda-03.jpg",alt:"La Saga"}];
+var MEMBERS=[{name:"Nicol\u00e1s Bagattini",instr:"Voz"},{name:"Agust\u00edn Ferreira",instr:"Guitarra"},{name:"Daniel Azzoni",instr:"Guitarra"},{name:"Diego Bonomo",instr:"Sintetizadores y Guitarra Ac\u00fastica"},{name:"Joaqu\u00edn Pena",instr:"Bajo"},{name:"Tote Fern\u00e1ndez",instr:"Bater\u00eda"}];
+function Banda(){return e("section",{id:"banda",className:"section"},e("div",{className:"container"},e(Reveal,{className:"section-head"},e("div",{className:"eyebrow"},"Qui\u00e9nes somos"),e("h2",{className:"section-title"},"LA BANDA"))),e("div",{className:"banda-carousel"},e("div",{className:"banda-track"},SLIDES.map(function(s,i){return e("div",{key:i,className:"banda-slide"},s.img?e("img",{src:s.img,alt:s.alt,style:{width:"100%",height:"100%",objectFit:"cover",position:"absolute",inset:0}}):e("span",{className:"banda-slide__label"},s.alt))}))),e("div",{className:"container"},e(Reveal,{className:"banda-members"},MEMBERS.map(function(m){return e("div",{key:m.name,className:"banda-member"},e("div",{className:"banda-member__name"},m.name),e("div",{className:"banda-member__instr"},m.instr))}))))}
+
+var ALBUMS=[{name:"\u00bfDe d\u00f3nde quer\u00e9s venir ma\u00f1ana?",year:"2003",url:"https://open.spotify.com/intl-es/album/0f5QK735FEboWtFarXFbqQ"},{name:"Quiero",year:"2005",url:"https://open.spotify.com/intl-es/album/0HsDvReWsbPRMva3SIXcjf"},{name:"Eso Que Nos Lleva",year:"2007",gold:true,url:"https://open.spotify.com/intl-es/album/2ZGWcFR0ufkffZHuXnYXWh"},{name:"El Vendaval",year:"2010",url:"https://open.spotify.com/intl-es/album/3uVTgDf5WVEEQPMUZjcohp"},{name:"\u00cdntimo",year:"2011",url:"https://open.spotify.com/intl-es/album/5V9uXeAxS4wnc9eAXkLJ31"},{name:"VOS",year:"2016",url:"https://open.spotify.com/intl-es/album/07fno6Awjj3RHJ6snxGN5I"}];
+function Discografia(){return e("section",{id:"discos",className:"section section--darker"},e("div",{className:"container"},e(Reveal,{className:"section-head"},e("div",{className:"eyebrow"},"Seis discos \u00b7 veinte a\u00f1os"),e("h2",{className:"section-title"},"DISCOGRAF\u00cdA")),e("div",{className:"disc-grid"},ALBUMS.map(function(a,i){return e(Reveal,{key:a.name,delay:i*60,className:"disc"},e("a",{href:a.url,className:"disc__cover",target:"_blank",rel:"noopener"},e("span",{className:"disc__cover-title"},a.name),a.gold?e("span",{className:"disc__gold-badge"},"Disco de Oro"):null),e("div",{className:"disc__meta"},e("span",{className:"disc__name"},a.name),e("span",{className:"disc__year"},a.year)),e("a",{href:a.url,className:"disc__listen",target:"_blank",rel:"noopener"},"Escuchar"))})),e("div",{className:"playlist-cta"},e(Reveal,null,e("a",{href:"https://open.spotify.com/playlist/1ylnFl2AbyTPG9ppzfTzxa",target:"_blank",rel:"noopener"},"\u25b6 Playlist La Saga Vuelve en Spotify")))))}
+
+var VIDEOS=[
+{title:"Once",meta:"VIDEOCLIP",yt:"2JtZU9iVFXY"},
+{title:"Color",meta:"VIDEOCLIP",yt:"BhdZI2dRLjU"},
+{title:"Vos",meta:"VIDEOCLIP",yt:"Sq-THGP1TKY"},
+{title:"Eso Que Nos Lleva",meta:"EN VIVO",yt:"L3UWbgSG6Bo"}
+];
+function Videos(){return e("section",{id:"videos",className:"section"},e("div",{className:"container"},e(Reveal,{className:"section-head"},e("div",{className:"eyebrow"},"C\u00e1mara, fuego, escenario"),e("h2",{className:"section-title"},"EN VIVO")),e("div",{className:"videos-grid"},VIDEOS.map(function(v,i){return e(Reveal,{key:v.yt,delay:i*80,className:"video"},e("div",{className:"video__frame"},e("iframe",{src:"https://www.youtube.com/embed/"+v.yt+"?rel=0",title:v.title,allow:"accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture",allowFullScreen:true})),e("div",{className:"video__title"},e("span",null,v.title),e("span",{className:"video__title-meta"},v.meta)))}))))}
+
+var APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbyA-FN1wgVGG1vMQ2EVwdhDAH7YZ38ATvpAyfuoZVA36PAeCWjxbsFF7xiBbBP892uksQ/exec";
+function Lista(){var sN=useState(""),nombre=sN[0],setNombre=sN[1],sE=useState(""),email=sE[0],setEmail=sE[1],sC=useState(""),cel=sC[0],setCel=sC[1],sS=useState(false),sent=sS[0],setSent=sS[1],sL=useState(false),loading=sL[0],setLoading=sL[1];var submit=function(ev){ev.preventDefault();if(!nombre.trim()||!email.trim())return;setLoading(true);fetch(APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({nombre:nombre,email:email,celular:cel,source:"web-lasaga"})}).then(function(){setSent(true);setLoading(false)}).catch(function(){setSent(true);setLoading(false)})};return e("section",{id:"lista",className:"lista-section"},e("div",{className:"container"},e(Reveal,{className:"lista"},!sent?e(React.Fragment,null,e("h2",{className:"lista__title"},"Sumate a la lista del reencuentro"),e("div",{className:"lista__sub"},"Lo importante llega primero ac\u00e1"),e("form",{className:"lista__form lista__form--stack",onSubmit:submit},e("input",{type:"text",className:"lista__input",placeholder:"Tu nombre",value:nombre,onChange:function(ev){setNombre(ev.target.value)},required:true}),e("input",{type:"email",className:"lista__input",placeholder:"Tu email",value:email,onChange:function(ev){setEmail(ev.target.value)},required:true}),e("input",{type:"tel",className:"lista__input",placeholder:"Tu celular (opcional)",value:cel,onChange:function(ev){setCel(ev.target.value)}}),e("button",{type:"submit",className:"btn-amber lista__submit",disabled:loading},loading?"Enviando...":"Sumarme"))):e("div",{className:"lista__success"},"\u00a1Listo! Ya est\u00e1s en la lista."))))}
+
+function StickyBar(){var s1=useState(false),visible=s1[0],setVisible=s1[1];useEffect(function(){var f=function(){setVisible(window.scrollY>window.innerHeight*.8)};window.addEventListener("scroll",f,{passive:true});return function(){window.removeEventListener("scroll",f)}},[]);return e("div",{className:"sticky-bar "+(visible?"visible":"")},e("span",{className:"sticky-bar__text"},"Sumate a la lista del reencuentro"),e("a",{href:"#lista",className:"btn-amber btn-amber--sm"},"Sumarme"))}
+
+function Contacto(){var emailAddr=mgmtEmail();return e("section",{id:"contacto",className:"section",style:{paddingTop:100,paddingBottom:80}},e("div",{className:"container"},e(Reveal,{className:"section-head",style:{marginBottom:44}},e("div",{className:"eyebrow"},"Hablemos"),e("h2",{className:"section-title"},"CONTACTO")),e(Reveal,{className:"contacto"},e("div",{className:"contacto__line"},e("span",{className:"contacto__lbl"},"Prensa y Booking"),e("a",{className:"link-amber",href:"mailto:"+emailAddr},emailAddr)),e("div",{className:"contacto__line"},e("span",{className:"contacto__lbl"},"Management"),"Adri\u00e1n Castell\u00f3"))))}
+
+function Footer(){return e("footer",{className:"footer"},e("div",{className:"container"},e("div",{className:"footer__divider"}),e("div",{className:"footer__socials"},e("a",{href:"https://instagram.com/lasagarock",className:"footer__social",target:"_blank",rel:"noopener","aria-label":"Instagram"},e(InstagramIcon)),e("a",{href:"https://open.spotify.com/intl-es/artist/4E0jqZtxbwVYgtdj4Ydico",className:"footer__social",target:"_blank",rel:"noopener","aria-label":"Spotify"},e(SpotifyIcon)),e("a",{href:"https://www.youtube.com/@LaSaga",className:"footer__social",target:"_blank",rel:"noopener","aria-label":"YouTube"},e(YoutubeIcon))),e("div",{className:"footer__thanks"},"Gracias por estar ah\u00ed."),e("div",{className:"footer__sign"},"La Saga \u00b7 Montevideo")))}
+
+function App(){return e(React.Fragment,null,e(Nav),e(Hero),e(Banda),e(Discografia),e(Videos),e(Lista),e(Contacto),e(Footer),e(StickyBar))}
+ReactDOM.createRoot(document.getElementById("root")).render(e(App));
+  </script>
+</body>
+</html>
