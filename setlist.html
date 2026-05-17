@@ -48,6 +48,10 @@ h1{font-weight:800;font-size:clamp(36px,6vw,56px);letter-spacing:-.02em;line-hei
 .ranking{margin:48px 0}
 .ranking h2{font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em;color:var(--cream);margin:0 0 8px}
 .ranking .sub{margin-bottom:32px}
+.rank-scroll{max-height:480px;overflow-y:auto;border:1px solid var(--cream-line);border-radius:4px;padding:0 20px;scrollbar-width:thin;scrollbar-color:var(--amber) transparent}
+.rank-scroll::-webkit-scrollbar{width:6px}
+.rank-scroll::-webkit-scrollbar-track{background:transparent}
+.rank-scroll::-webkit-scrollbar-thumb{background:var(--amber);border-radius:3px}
 .rank-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--cream-line)}
 .rank-pos{font-family:var(--font-mono);font-size:24px;font-weight:700;color:var(--amber-bright);width:40px;text-align:center;flex-shrink:0}
 .rank-info{flex:1;min-width:0}
@@ -150,7 +154,7 @@ function App(){
       loadingRank
         ? e("div",{className:"loading"},"Cargando ranking...")
         : rankList.length>0
-          ? rankList.slice(0,15).map(function(item,i){
+          ? e("div",{className:"rank-scroll"},rankList.map(function(item,i){
               var pct=Math.max(5,Math.round((item.votes/maxVotes)*100));
               return e("div",{key:item.song,className:"rank-item"},
                 e("div",{className:"rank-pos"},"#"+(i+1)),
@@ -160,7 +164,7 @@ function App(){
                   e("div",{className:"rank-bar-wrap"},e("div",{className:"rank-bar",style:{width:pct+"%"}}))
                 ),
                 e("div",{className:"rank-votes"},item.votes+" voto"+(item.votes!==1?"s":""))
-              )})
+              )}))
           : e("div",{className:"loading"},"Todav\u00eda no hay votos. \u00a1S\u00e9 el primero!")
     ),
 
