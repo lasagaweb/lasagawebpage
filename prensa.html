@@ -19,49 +19,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
 :root{
-  --burgundy-950:#1a0606; --burgundy-900:#240a0a; --burgundy-800:#2a0a0a;
-  --cream:#f5e6d0; --cream-dim:rgba(245,230,208,0.65); --cream-faint:rgba(245,230,208,0.42);
-  --cream-line:rgba(245,230,208,0.14); --amber:#c8956c; --amber-bright:#d4a574;
+  --fondo:#efe6d8; --tarjeta:#ffffff; --hueco:#faf5ec;
+  --tinta:#2a0a0a; --texto:#3a3028; --texto-dim:#6b5f52; --texto-faint:#9a8f80;
+  --linea:#ddd0bd; --bordo:#8c2b2b; --amber:#a07a55; --amber-bright:#8c2b2b;
   --font:"Outfit","Helvetica Neue",Helvetica,system-ui,sans-serif;
   --font-italic:"Cormorant Garamond",Georgia,serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);font-family:var(--font);-webkit-font-smoothing:antialiased}
+html,body{margin:0;padding:0;background:var(--fondo);color:var(--texto);font-family:var(--font);-webkit-font-smoothing:antialiased}
 a{color:var(--amber-bright)}
 .wrap{max-width:760px;margin:0 auto;padding:0 24px}
 .top{padding:34px 0 0;text-align:center}
-.top a{display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--cream-dim);text-decoration:none}
+.top a{display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--texto-dim);text-decoration:none}
 .top a:hover{color:var(--amber-bright)}
 .hero{padding:40px 0 6px;text-align:center}
 .marca{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin:0 0 20px}
-h1{font-size:clamp(34px,8vw,58px);line-height:.95;font-weight:800;letter-spacing:-.02em;margin:0}
-.lema{font-family:var(--font-italic);font-style:italic;font-size:clamp(18px,3.6vw,22px);color:var(--cream-dim);margin:18px 0 0}
-.filete{width:64px;height:2px;background:var(--amber);margin:34px auto}
+h1{font-size:clamp(34px,8vw,58px);line-height:.95;font-weight:800;letter-spacing:-.02em;margin:0;color:var(--tinta)}
+.lema{font-family:var(--font-italic);font-style:italic;font-size:clamp(18px,3.6vw,22px);color:var(--texto-dim);margin:18px 0 0}
+.filete{width:64px;height:2px;background:var(--bordo);margin:34px auto}
 h2{font-size:12px;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin:54px 0 18px;font-weight:600}
-.texto{font-size:17px;line-height:1.7;color:var(--cream-dim);margin:0 0 18px}
-.texto strong{color:var(--cream);font-weight:600}
+.texto{font-size:17px;line-height:1.7;color:var(--texto-dim);margin:0 0 18px}
+.texto strong{color:var(--tinta);font-weight:600}
 .video{position:relative;padding-top:56.25%;margin:0 0 22px;border-radius:4px;overflow:hidden;background:#000}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .bajadas{display:grid;gap:12px;margin:0 0 8px}
-.bajada{display:flex;align-items:center;gap:16px;background:var(--burgundy-800);border:1px solid var(--cream-line);border-radius:5px;padding:16px 18px;text-decoration:none;color:var(--cream);transition:border-color .15s,background .15s}
-.bajada:hover{border-color:var(--amber);background:var(--burgundy-950)}
-.bajada .ico{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--amber);color:#1a0606;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
+.bajada{display:flex;align-items:center;gap:16px;background:var(--hueco);border:1px solid var(--linea);border-radius:5px;padding:16px 18px;text-decoration:none;color:var(--tinta);transition:border-color .15s,background .15s}
+.bajada:hover{border-color:var(--amber);background:var(--hueco)}
+.bajada .ico{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--bordo);color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
 .bajada .txt{flex:1 1 auto;min-width:0}
 .bajada .tit{display:block;font-size:16px;font-weight:600}
-.bajada .sub{display:block;font-size:13px;color:var(--cream-faint);margin-top:2px}
-.caja{background:var(--burgundy-800);border:1px solid var(--cream-line);border-left:3px solid var(--amber);border-radius:4px;padding:24px 26px;margin:28px 0}
+.bajada .sub{display:block;font-size:13px;color:var(--texto-faint);margin-top:2px}
+.caja{background:var(--tarjeta);border:1px solid var(--linea);border-left:3px solid var(--bordo);border-radius:4px;padding:24px 26px;margin:28px 0}
 .caja p{margin:0 0 10px;font-size:16px;line-height:1.7}
 .caja p:last-child{margin:0}
 .ficha{list-style:none;padding:0;margin:0}
-.ficha li{border-bottom:1px solid var(--cream-line);padding:13px 0;font-size:16px;display:flex;gap:18px;line-height:1.5}
+.ficha li{border-bottom:1px solid var(--linea);padding:13px 0;font-size:16px;display:flex;gap:18px;line-height:1.5}
 .ficha li:last-child{border-bottom:0}
-.ficha b{flex:0 0 132px;color:var(--cream-faint);font-weight:500;font-size:13px;letter-spacing:.5px;text-transform:uppercase;padding-top:3px}
-.ficha span{color:var(--cream-dim)}
-.chico{font-size:13px;line-height:1.65;color:var(--cream-faint);margin:14px 0 0}
-.contador{text-align:center;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,230,208,0.3);margin:22px 0 0;min-height:16px}
-footer{margin-top:66px;padding:30px 0 46px;border-top:1px solid var(--cream-line);text-align:center}
-footer p{margin:0 0 8px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,230,208,0.38)}
+.ficha b{flex:0 0 132px;color:var(--texto-faint);font-weight:500;font-size:13px;letter-spacing:.5px;text-transform:uppercase;padding-top:3px}
+.ficha span{color:var(--texto-dim)}
+.chico{font-size:13px;line-height:1.65;color:var(--texto-faint);margin:14px 0 0}
+.contador{text-align:center;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--texto-faint);margin:22px 0 0;min-height:16px}
+footer{margin-top:66px;padding:30px 0 46px;border-top:1px solid var(--linea);text-align:center}
+footer p{margin:0 0 8px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--texto-faint)}
 @media(max-width:560px){.caja{padding:20px 18px}.ficha li{flex-direction:column;gap:4px}.ficha b{flex:none}}
   </style>
 </head>
@@ -136,7 +136,7 @@ footer p{margin:0 0 8px;font-size:12px;letter-spacing:2px;text-transform:upperca
 
     <footer>
       <p>La Saga · Prensa</p>
-      <p style="letter-spacing:0;text-transform:none;font-size:13px;color:rgba(245,230,208,0.3)">Esta página es para prensa. No está indexada.</p>
+      <p style="letter-spacing:0;text-transform:none;font-size:13px;color:var(--texto-faint)">Esta página es para prensa. No está indexada.</p>
     </footer>
   </div>
 
