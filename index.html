@@ -189,6 +189,11 @@ html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);f
 body.lb-abierto .sticky-bar{opacity:0;pointer-events:none}
 .lb__pie{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,230,208,.55)}
 @media(max-width:640px){.lb{padding:48px 8px 66px}.lb__nav{width:42px;height:60px;font-size:32px}}
+
+/* el hero ya no necesita ocupar la pantalla entera: con el video adentro sobraba aire abajo */
+.hero{min-height:auto;padding-bottom:56px}
+#noche{padding-top:64px}
+@media(max-width:700px){.hero{padding-bottom:36px}#noche{padding-top:44px}}
   </style>
 </head>
 <body>
