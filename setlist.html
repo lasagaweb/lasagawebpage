@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Saga — Arm&aacute; el Setlist</title>
+  <title>La Saga — Las canciones más votadas</title>
   <meta name="description" content="Eleg&iacute; las canciones que no pueden faltar el 17 de septiembre en Sala del Museo.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -154,14 +154,14 @@ function App(){
   return e("div",{className:"wrap"},
     e("div",{className:"header"},
       e("a",{href:"index.html"},"LA\u00a0SAGA"),
-      e("h1",null,"ARM\u00c1 EL SETLIST"),
-      e("div",{className:"sub"},"Eleg\u00ed hasta 5 canciones que no pueden faltar el 17 de septiembre")
+      e("h1",null,"LAS M\u00c1S VOTADAS"),
+      e("div",{className:"sub"},"Eleg\u00ed hasta 5 canciones que no pueden faltar en un show nuestro")
     ),
 
     // Ranking section (top)
     e("div",{className:"ranking"},
-      e("h2",null,"RANKING EN VIVO"),
-      e("div",{className:"sub"},"Las 5 m\u00e1s votadas entran al setlist del 17 de septiembre"),
+      e("h2",null,"EL RANKING"),
+      e("div",{className:"sub"},"Los votos se suman desde 2026 y no se borran: esto es lo que m\u00e1s quiere la gente"),
       loadingRank
         ? e("div",{className:"loading"},"Cargando ranking...")
         : rankList.length>0
@@ -187,7 +187,7 @@ function App(){
     sent
       ? e("div",{className:"success-msg"},
           e("h3",null,"Gracias por votar."),
-          e("p",null,"Tu voto fue registrado"),
+          e("p",null,"Tu voto qued\u00f3 sumado al ranking"),
           e("a",{href:"https://redtickets.uy/evento/LA-SAGA-VUELVE/28134/",className:"btn-amber",target:"_blank",rel:"noopener",style:{marginTop:24,display:"inline-flex"}},"Reserv\u00e1 tu lugar")
         )
       : e(React.Fragment,null,
