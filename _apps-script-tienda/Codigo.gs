@@ -12,12 +12,11 @@
  *   MP_ACCESS_TOKEN   token de producción de la cuenta de Mercado Pago de La Saga (lo carga Nico)
  *   MAIL_FACTORIA     contacto@factoriamerch.com
  *   MAIL_BANDA        mail de La Saga que recibe copia
- *   DIRECCION_RETIRO  dirección del local de Factoría para retirar
  *   URL_TIENDA        https://lasaga.co/tienda
  */
 
 const TALLES = ['S', 'M', 'L', 'XL', 'XXL'];
-const ENVIO_MONTEVIDEO = 200;
+const ENVIO_MONTEVIDEO = 250; // lo que paga el comprador; a Factoría le llegan 200
 const COLUMNAS_PEDIDOS = ['pedido', 'fecha', 'estado', 'pago_mp', 'total', 'items', 'entrega',
   'nombre', 'email', 'telefono', 'direccion', 'localidad', 'departamento', 'nota', 'avisado'];
 
@@ -64,7 +63,7 @@ function crearPedido_(cuerpo) {
   try {
     const stock = leerStock_();
     const c = cuerpo.comprador || {};
-    if (!['retiro', 'montevideo', 'interior'].includes(c.entrega)) return json_({ ok: false, error: 'Entrega no válida.' });
+    if (!['montevideo', 'interior'].includes(c.entrega)) return json_({ ok: false, error: 'Entrega no válida.' });
     const items = [];
     for (const it of (cuerpo.items || [])) {
       const p = stock.find(x => x.id === it.id);
@@ -159,7 +158,6 @@ function descontarStock_(items) {
 }
 
 function textoEntrega_(p) {
-  if (p.entrega === 'retiro') return 'Retira en el local';
   if (p.entrega === 'montevideo') return `Envío en Montevideo: ${p.direccion}, ${p.localidad}`;
   return `DAC al interior: ${p.direccion}, ${p.localidad}, ${p.departamento} (paga el envío al recibir)`;
 }
@@ -184,11 +182,10 @@ function avisarFactoria_(p, faltante) {
 
 function avisarComprador_(p) {
   const lineas = p.items.map(i => `- ${i.titulo} × ${i.cantidad}`).join('\n');
-  const retiro = p.entrega === 'retiro' ? `\nPodés retirarla en: ${prop_('DIRECCION_RETIRO')}` : '';
   MailApp.sendEmail({
     to: p.email, replyTo: prop_('MAIL_BANDA'),
     subject: 'Tu compra en la tienda de La Saga',
-    body: `Hola, ${p.nombre}:\n\nRecibimos tu pago. Esto es lo que pediste:\n\n${lineas}\n\nEntrega: ${textoEntrega_(p)}${retiro}\n\nTe escribimos para coordinar. Gracias por bancarnos.\n\nLa Saga`,
+    body: `Hola, ${p.nombre}:\n\nRecibimos tu pago. Esto es lo que pediste:\n\n${lineas}\n\nEntrega: ${textoEntrega_(p)}\n\nTe escribimos para coordinar. Gracias por bancarnos.\n\nLa Saga`,
     name: 'La Saga'
   });
 }
