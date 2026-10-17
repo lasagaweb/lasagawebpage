@@ -40,9 +40,18 @@ h1{font-size:clamp(34px,7vw,64px);line-height:1;font-weight:800;letter-spacing:.
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 .aviso{background:var(--ok-fondo);border:1px solid var(--linea);border-left:4px solid var(--amber);border-radius:6px;padding:18px 22px;margin:34px 0 0;font-size:16px;line-height:1.6}
 .aviso[hidden]{display:none}
-.grilla{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:-26px}
-@media(max-width:1020px){.grilla{grid-template-columns:repeat(2,1fr)}}
+.tienda{margin-top:-26px}
+.grilla{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
 @media(max-width:560px){.grilla{grid-template-columns:1fr}}
+/* En pantalla ancha el pedido va a la derecha, fijo mientras se recorren las remeras. */
+@media(min-width:980px){
+  .tienda{display:grid;grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"grilla pedido" "datos pedido";column-gap:26px;align-items:start}
+  .grilla{grid-area:grilla}
+  #carrito{grid-area:pedido;position:sticky;top:20px;margin:0;max-width:none;max-height:calc(100vh - 40px);overflow-y:auto}
+  #datos{grid-area:datos;margin:34px 0 0;max-width:none}
+  .seguir{display:none}
+  .barra{display:none!important}
+}
 .prod{background:var(--papel);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(42,10,10,.06),0 8px 24px rgba(42,10,10,.08);transition:transform .2s,box-shadow .2s}
 .prod:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(42,10,10,.08),0 14px 32px rgba(42,10,10,.12)}
 .prod img{width:100%;display:block;background:#fff;aspect-ratio:1.8/1;object-fit:contain;border-bottom:1px solid var(--linea)}
@@ -61,7 +70,9 @@ h1{font-size:clamp(34px,7vw,64px);line-height:1;font-weight:800;letter-spacing:.
 .btn:disabled{background:#d9cbb9;color:#fff;cursor:not-allowed}
 .ultima{margin:0;font-size:13px;font-weight:600;color:var(--amber-oscuro)}
 .agotado{font-size:14px;color:var(--tinta-suave);font-style:italic}
-.carrito{background:var(--papel);border-radius:10px;box-shadow:0 8px 24px rgba(42,10,10,.08);padding:28px 28px;margin:44px auto 0;max-width:640px}
+.carrito{background:var(--papel);border-radius:10px;box-shadow:0 8px 24px rgba(42,10,10,.08);padding:26px 26px;margin:34px auto 0;max-width:640px}
+.vacio{margin:0;font-size:15px;line-height:1.6;color:var(--tinta-suave)}
+.carrito a.btn{margin-top:18px;text-align:center;text-decoration:none}
 .carrito h2{margin:0 0 16px;font-size:24px}
 .linea{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--linea);font-size:15px}
 .linea .nom{flex:1}
@@ -108,16 +119,24 @@ footer p{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;col
   <div class="wrap">
     <div class="aviso" id="aviso" hidden></div>
 
+    <div class="tienda">
     <section class="grilla" id="grilla" aria-label="Remeras"></section>
 
-    <section class="carrito" id="carrito" hidden>
+    <aside class="carrito" id="carrito">
       <h2>Tu pedido</h2>
-      <div id="lineas"></div>
-      <div class="total"><span>Total</span><span id="total"></span></div>
-      <p class="seguir"><a href="#grilla">+ Sumar otra remera</a></p>
+      <p class="vacio" id="vacio">Elegí el talle y tocá «Agregar». Podés sumar todas las que quieras; tu pedido aparece acá.</p>
+      <div id="pedido-lleno" hidden>
+        <div id="lineas"></div>
+        <div class="total"><span>Total</span><span id="total"></span></div>
+        <p class="seguir"><a href="#grilla">+ Sumar otra remera</a></p>
+        <a class="btn" id="a-datos" href="#datos">Completar mis datos</a>
+      </div>
+    </aside>
 
+    <section class="carrito datos" id="datos" hidden>
+      <h2>Para el envío</h2>
       <form id="form" novalidate>
-        <fieldset>
+        <fieldset style="margin-top:0">
           <legend>Entrega</legend>
           <label class="opcion"><input type="radio" name="entrega" value="montevideo" checked> <span>Envío en Montevideo<small id="txt-montevideo"></small></span></label>
         </fieldset>
@@ -146,6 +165,7 @@ footer p{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;col
         <p class="chico">El pago lo hacés en Mercado Pago. Cuando se aprueba, te llega la confirmación por mail y te escribimos para coordinar la entrega.</p>
       </form>
     </section>
+    </div>
 
     <footer><p>La Saga · Montevideo</p></footer>
   </div>
@@ -227,7 +247,9 @@ function pintarGrilla() {
 function entregaElegida() { return document.querySelector('input[name="entrega"]:checked').value; }
 
 function pintarCarrito() {
-  $("#carrito").hidden = carrito.length === 0;
+  $("#vacio").hidden = carrito.length > 0;
+  $("#pedido-lleno").hidden = carrito.length === 0;
+  $("#datos").hidden = carrito.length === 0;
   const cont = $("#lineas"); cont.innerHTML = "";
   let suma = 0;
   carrito.forEach((l, i) => {
@@ -249,6 +271,7 @@ function pintarCarrito() {
     d.innerHTML = `<span>Envío</span><span>${plata(envio)}</span>`; cont.appendChild(d);
   }
   $("#total").textContent = plata(suma + envio);
+  if (!$("#pagar").disabled) $("#pagar").textContent = `Pagar ${plata(suma + envio)} con Mercado Pago`;
   const n = carrito.reduce((s, l) => s + l.cantidad, 0);
   $("#barra-txt").textContent = `${n} remera${n === 1 ? "" : "s"} · Total ${plata(suma + envio)}`;
   pintarBarra();
@@ -282,7 +305,7 @@ async function pagar(ev) {
     location.href = j.url;
   } catch (e) {
     error(e.message + " Probá de nuevo en un rato o escribinos.");
-    b.disabled = false; b.textContent = "Pagar con Mercado Pago";
+    b.disabled = false; pintarCarrito();
   }
 }
 
@@ -305,6 +328,7 @@ function estadoDeVuelta() {
   Object.keys(ENTREGAS).forEach(k => $("#txt-" + k).textContent = ENTREGAS[k].texto);
   document.querySelectorAll('input[name="entrega"]').forEach(r => r.onchange = pintarCarrito);
   $("#form").onsubmit = pagar;
+  $("#a-datos").onclick = () => setTimeout(() => $("#nombre").focus({ preventScroll: true }), 450);
   if ("IntersectionObserver" in window)
     new IntersectionObserver(([e]) => { carritoALaVista = e.isIntersecting; pintarBarra(); }, { rootMargin: "0px 0px -35% 0px" }).observe($("#carrito"));
   estadoDeVuelta();
