@@ -1,7 +1,8 @@
 /**
  * Tienda de La Saga: cobro con Mercado Pago, aviso a Factoría y stock.
  *
- * Va pegado en un proyecto de Google Apps Script ligado a la planilla «Tienda La Saga».
+ * Va pegado en un proyecto de Google Apps Script ligado a la planilla «Tienda La Saga»
+ * (docs.google.com/spreadsheets/d/1plmi637otetx7OUpzPnSlAAmu-mnRJz3lFnbZsF7TWI).
  * La carpeta empieza con _ para que GitHub Pages no la publique.
  *
  * Planilla:
@@ -22,7 +23,11 @@ const COLUMNAS_PEDIDOS = ['pedido', 'fecha', 'estado', 'pago_mp', 'total', 'item
 
 function prop_(k) { return PropertiesService.getScriptProperties().getProperty(k) || ''; }
 function json_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
-function hoja_(nombre) { return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(nombre); }
+function hoja_(nombre) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  // La planilla nació de un CSV y su primera hoja puede no llamarse «Stock».
+  return ss.getSheetByName(nombre) || (nombre === 'Stock' ? ss.getSheets()[0] : null);
+}
 
 function leerStock_() {
   const filas = hoja_('Stock').getDataRange().getValues();
