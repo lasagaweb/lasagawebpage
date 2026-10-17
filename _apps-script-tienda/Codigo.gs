@@ -1,8 +1,9 @@
 /**
  * Tienda de La Saga: cobro con Mercado Pago, aviso a Factoría y stock.
  *
- * Va pegado en un proyecto de Google Apps Script ligado a la planilla «Tienda La Saga»
- * (docs.google.com/spreadsheets/d/1plmi637otetx7OUpzPnSlAAmu-mnRJz3lFnbZsF7TWI).
+ * Va en un proyecto de Apps Script independiente creado en la cuenta lasagaweb@gmail.com y publicado
+ * como app web «ejecutar como yo», así los mails salen desde lasagaweb@gmail.com.
+ * Lee la planilla «Tienda La Saga» (compartida con esa cuenta como editora).
  * La carpeta empieza con _ para que GitHub Pages no la publique.
  *
  * Planilla:
@@ -16,6 +17,7 @@
  *   URL_TIENDA        https://lasaga.co/tienda
  */
 
+const PLANILLA_ID = '1plmi637otetx7OUpzPnSlAAmu-mnRJz3lFnbZsF7TWI';
 const TALLES = ['S', 'M', 'L', 'XL', 'XXL'];
 const ENVIO_MONTEVIDEO = 250; // lo que paga el comprador; a Factoría le llegan 200
 const COLUMNAS_PEDIDOS = ['pedido', 'fecha', 'estado', 'pago_mp', 'total', 'items', 'entrega',
@@ -24,7 +26,7 @@ const COLUMNAS_PEDIDOS = ['pedido', 'fecha', 'estado', 'pago_mp', 'total', 'item
 function prop_(k) { return PropertiesService.getScriptProperties().getProperty(k) || ''; }
 function json_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 function hoja_(nombre) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(PLANILLA_ID);
   // La planilla nació de un CSV y su primera hoja puede no llamarse «Stock».
   return ss.getSheetByName(nombre) || (nombre === 'Stock' ? ss.getSheets()[0] : null);
 }
@@ -42,7 +44,7 @@ function leerStock_() {
 
 function hojaPedidos_() {
   let h = hoja_('Pedidos');
-  if (!h) { h = SpreadsheetApp.getActiveSpreadsheet().insertSheet('Pedidos'); h.appendRow(COLUMNAS_PEDIDOS); }
+  if (!h) { h = SpreadsheetApp.openById(PLANILLA_ID).insertSheet('Pedidos'); h.appendRow(COLUMNAS_PEDIDOS); }
   return h;
 }
 
