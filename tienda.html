@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda de La Saga</title>
+  <meta name="description" content="Remeras de La Saga. Pagás con Mercado Pago y te la mandamos a tu casa.">
+  <meta property="og:title" content="Tienda de La Saga">
+  <meta property="og:description" content="Remeras de La Saga.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lasaga.co/tienda">
+  <meta property="og:image" content="https://lasaga.co/tienda/remera-2.jpg">
+  <meta property="og:locale" content="es_UY">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --burgundy-950:#1a0606; --burgundy-900:#240a0a; --burgundy-800:#2a0a0a; --burgundy-700:#361010;
+  --cream:#f5e6d0; --cream-dim:rgba(245,230,208,0.65); --cream-faint:rgba(245,230,208,0.18);
+  --cream-line:rgba(245,230,208,0.14); --amber:#c8956c; --amber-bright:#d4a574;
+  --font:"Outfit","Helvetica Neue",Helvetica,system-ui,sans-serif;
+  --font-italic:"Cormorant Garamond",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0;background:var(--burgundy-900);color:var(--cream);font-family:var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--amber-bright)}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+.top{padding:34px 0 0;text-align:center}
+.top a{display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--cream-dim);text-decoration:none}
+.top a:hover{color:var(--amber-bright)}
+.hero{padding:40px 0 6px;text-align:center}
+.marca{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin:0 0 20px}
+h1{font-size:clamp(34px,8vw,62px);line-height:.95;font-weight:800;letter-spacing:-.02em;margin:0}
+.lema{font-family:var(--font-italic);font-style:italic;font-size:clamp(18px,3.6vw,23px);color:var(--cream-dim);margin:18px 0 0}
+.filete{width:64px;height:2px;background:var(--amber);margin:34px auto}
+.aviso{background:var(--burgundy-800);border:1px solid var(--cream-line);border-left:3px solid var(--amber);border-radius:4px;padding:18px 22px;margin:0 0 30px;font-size:16px;line-height:1.6}
+.aviso[hidden]{display:none}
+.grilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
+.prod{background:var(--burgundy-950);border:1px solid var(--cream-line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.prod img{width:100%;display:block;background:#fff;aspect-ratio:1.8/1;object-fit:contain}
+.prod .cuerpo{padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.prod h2{margin:0;font-size:20px;font-weight:700}
+.prod .desc{margin:0;font-size:14px;color:var(--cream-dim)}
+.precio{font-size:18px;font-weight:600;color:var(--amber-bright)}
+.talles{display:flex;flex-wrap:wrap;gap:8px}
+.talles button{min-width:46px;padding:9px 10px;border:1px solid var(--cream-faint);border-radius:4px;background:transparent;color:var(--cream);font:600 14px var(--font);cursor:pointer}
+.talles button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--burgundy-950)}
+.talles button:disabled{opacity:.3;text-decoration:line-through;cursor:not-allowed}
+.agregar{margin-top:auto}
+.btn{display:inline-block;width:100%;padding:13px 16px;border:0;border-radius:4px;background:var(--amber);color:var(--burgundy-950);font:700 15px var(--font);letter-spacing:.5px;cursor:pointer}
+.btn:hover{background:var(--amber-bright)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.sec{background:transparent;border:1px solid var(--cream-faint);color:var(--cream)}
+.ultima{margin:0;font-size:13px;color:var(--amber-bright)}
+.agotado{font-size:14px;color:var(--cream-dim);font-style:italic}
+.carrito{background:var(--burgundy-950);border:1px solid var(--cream-line);border-radius:6px;padding:26px 24px;margin:40px 0 0}
+.carrito h2{margin:0 0 16px;font-size:22px}
+.linea{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cream-line);font-size:15px}
+.linea button{background:none;border:0;color:var(--cream-dim);cursor:pointer;font-size:13px;text-decoration:underline}
+.total{display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding:14px 0 4px}
+fieldset{border:0;padding:0;margin:22px 0 0}
+legend{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+label{display:block;font-size:14px;color:var(--cream-dim);margin:12px 0 5px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--cream-faint);border-radius:4px;background:var(--burgundy-900);color:var(--cream);font:15px var(--font)}
+.opcion{display:flex;gap:10px;align-items:flex-start;padding:10px 0;font-size:15px;color:var(--cream);margin:0;cursor:pointer}
+.opcion input{width:auto;margin-top:3px}
+.opcion small{display:block;color:var(--cream-dim);font-size:13px}
+.chico{font-size:13px;line-height:1.6;color:rgba(245,230,208,0.42);margin:14px 0 0}
+.error{color:#ffb4a0;font-size:14px;margin:12px 0 0}
+footer{margin-top:64px;padding:30px 0 46px;border-top:1px solid var(--cream-line);text-align:center}
+footer p{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,230,208,0.38)}
+@media(max-width:520px){.wrap{padding:0 16px}.carrito{padding:22px 16px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top"><a href="/">← La Saga</a></div>
+
+    <header class="hero">
+      <p class="marca">Tienda</p>
+      <h1>Remeras<br>de La Saga</h1>
+      <p class="lema">Elegí tu talle. Te la mandamos a tu casa.</p>
+    </header>
+
+    <div class="filete"></div>
+
+    <div class="aviso" id="aviso" hidden></div>
+
+    <section class="grilla" id="grilla" aria-label="Remeras"></section>
+
+    <section class="carrito" id="carrito" hidden>
+      <h2>Tu pedido</h2>
+      <div id="lineas"></div>
+      <div class="total"><span>Total</span><span id="total"></span></div>
+
+      <form id="form" novalidate>
+        <fieldset>
+          <legend>Entrega</legend>
+          <label class="opcion"><input type="radio" name="entrega" value="montevideo" checked> <span>Envío en Montevideo<small id="txt-montevideo"></small></span></label>
+          <label class="opcion"><input type="radio" name="entrega" value="interior"> <span>Envío al interior por DAC<small id="txt-interior"></small></span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Tus datos</legend>
+          <label for="nombre">Nombre y apellido</label>
+          <input id="nombre" name="nombre" autocomplete="name" required>
+          <label for="email">Mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <label for="telefono">Celular</label>
+          <input id="telefono" name="telefono" type="tel" autocomplete="tel" required>
+          <div id="datos-envio">
+            <label for="direccion">Dirección</label>
+            <input id="direccion" name="direccion" autocomplete="street-address">
+            <label for="localidad">Barrio o localidad</label>
+            <input id="localidad" name="localidad">
+            <label for="departamento">Departamento</label>
+            <select id="departamento" name="departamento"></select>
+          </div>
+          <label for="nota">Algo que tengamos que saber (opcional)</label>
+          <textarea id="nota" name="nota" rows="2"></textarea>
+        </fieldset>
+
+        <p class="error" id="error" hidden></p>
+        <p style="margin:22px 0 0"><button class="btn" id="pagar" type="submit">Pagar con Mercado Pago</button></p>
+        <p class="chico">El pago lo hacés en Mercado Pago. Cuando se aprueba, te llega la confirmación por mail y te escribimos para coordinar la entrega.</p>
+      </form>
+    </section>
+
+    <footer><p>La Saga · Montevideo</p></footer>
+  </div>
+
+<script>
+// Configuración de la tienda. API es la URL del Apps Script publicado; vacía = tienda en vista previa, sin cobrar.
+const API = "https://script.google.com/macros/s/AKfycbx-jeZcuzdjlQreHdOU1Ibdmh4j7ZV8jNr_jdnCcNqiDNlviENLdjZ7tZoB6Cil9tEx/exec";
+const MONEDA = "$";
+const ENTREGAS = {
+  montevideo: { costo: 250, texto: "$250 más, te la llevamos a tu casa." },
+  interior:   { costo: 0,   texto: "El envío lo pagás al recibir." }
+};
+const DEPARTAMENTOS = ["Artigas","Canelones","Cerro Largo","Colonia","Durazno","Flores","Florida","Lavalleja","Maldonado","Paysandú","Río Negro","Rivera","Rocha","Salto","San José","Soriano","Tacuarembó","Treinta y Tres"];
+const TALLES = ["S","M","L","XL","XXL"];
+
+// Respaldo si no responde la planilla. El stock real vive en la planilla del Apps Script.
+const CATALOGO = [
+  { id: "remera-1", nombre: "Remera 1", desc: "Beige. Paraguas al frente y en la espalda.", img: "tienda/remera-1.jpg", precio: 1100, stock: { S:1, M:0, L:2, XL:2, XXL:0 } },
+  { id: "remera-2", nombre: "Remera 2", desc: "Negra. LA SAGA VUELVE en la espalda.",        img: "tienda/remera-2.jpg", precio: 1100, stock: { S:1, M:3, L:3, XL:0, XXL:1 } },
+  { id: "remera-3", nombre: "Remera 3", desc: "Negra. VOS al frente.",                       img: "tienda/remera-3.jpg", precio: 1100, stock: { S:1, M:3, L:5, XL:2, XXL:1 } },
+  { id: "remera-4", nombre: "Remera 4", desc: "Celeste. Foto al frente.",                    img: "tienda/remera-4.jpg", precio: 1100, stock: { S:2, M:3, L:1, XL:2, XXL:1 } }
+];
+
+let catalogo = CATALOGO;
+const carrito = []; // { id, talle, cantidad }
+const $ = s => document.querySelector(s);
+const plata = n => MONEDA + n.toLocaleString("es-UY");
+
+function aviso(texto) { const a = $("#aviso"); a.textContent = texto; a.hidden = !texto; }
+
+function enCarrito(id, talle) {
+  return carrito.filter(l => l.id === id && l.talle === talle).reduce((s, l) => s + l.cantidad, 0);
+}
+
+function pintarGrilla() {
+  const g = $("#grilla"); g.innerHTML = "";
+  catalogo.forEach(p => {
+    const hay = TALLES.some(t => (p.stock[t] || 0) > 0);
+    const el = document.createElement("article"); el.className = "prod";
+    el.innerHTML = `<img src="${p.img}" alt="${p.nombre}, frente y espalda" loading="lazy">
+      <div class="cuerpo"><h2>${p.nombre}</h2><p class="desc">${p.desc}</p><div class="precio">${plata(p.precio)}</div>
+      ${hay ? `<div class="talles" role="group" aria-label="Talle"></div><p class="ultima" hidden>Última de este talle</p><div class="agregar"><button class="btn" disabled>Elegí un talle</button></div>`
+            : `<p class="agotado">Agotada</p>`}</div>`;
+    if (hay) {
+      let elegido = null;
+      const fila = el.querySelector(".talles"), btn = el.querySelector(".agregar .btn"), ultima = el.querySelector(".ultima");
+      TALLES.forEach(t => {
+        const b = document.createElement("button"); b.type = "button"; b.textContent = t;
+        const libre = (p.stock[t] || 0) - enCarrito(p.id, t);
+        b.disabled = libre <= 0; b.setAttribute("aria-pressed", "false");
+        if (libre <= 0) b.title = "Agotado"; else if (libre === 1) b.title = "Última de este talle";
+        b.onclick = () => {
+          elegido = t;
+          fila.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+          btn.disabled = false; btn.textContent = "Agregar talle " + t;
+          ultima.hidden = (p.stock[t] || 0) - enCarrito(p.id, t) !== 1;
+        };
+        fila.appendChild(b);
+      });
+      btn.onclick = () => {
+        if (!elegido) return;
+        const l = carrito.find(x => x.id === p.id && x.talle === elegido);
+        if (l) l.cantidad++; else carrito.push({ id: p.id, talle: elegido, cantidad: 1 });
+        pintarGrilla(); pintarCarrito();
+        $("#carrito").scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+    }
+    g.appendChild(el);
+  });
+}
+
+function entregaElegida() { return document.querySelector('input[name="entrega"]:checked').value; }
+
+function pintarCarrito() {
+  $("#carrito").hidden = carrito.length === 0;
+  const cont = $("#lineas"); cont.innerHTML = "";
+  let suma = 0;
+  carrito.forEach((l, i) => {
+    const p = catalogo.find(x => x.id === l.id); const sub = p.precio * l.cantidad; suma += sub;
+    const d = document.createElement("div"); d.className = "linea";
+    d.innerHTML = `<span>${p.nombre} · talle ${l.talle} × ${l.cantidad}</span><span>${plata(sub)} <button type="button">quitar</button></span>`;
+    d.querySelector("button").onclick = () => { carrito.splice(i, 1); pintarGrilla(); pintarCarrito(); };
+    cont.appendChild(d);
+  });
+  const envio = ENTREGAS[entregaElegida()].costo;
+  if (envio) {
+    const d = document.createElement("div"); d.className = "linea";
+    d.innerHTML = `<span>Envío</span><span>${plata(envio)}</span>`; cont.appendChild(d);
+  }
+  $("#total").textContent = plata(suma + envio);
+  $("#departamento").disabled = entregaElegida() !== "interior";
+  if (entregaElegida() === "montevideo") $("#departamento").value = "Montevideo";
+}
+
+function error(t) { const e = $("#error"); e.textContent = t; e.hidden = !t; }
+
+async function pagar(ev) {
+  ev.preventDefault(); error("");
+  const f = new FormData($("#form"));
+  const datos = Object.fromEntries(f.entries());
+  datos.entrega = entregaElegida();
+  if (!datos.nombre.trim() || !datos.telefono.trim() || !/^\S+@\S+\.\S+$/.test(datos.email)) return error("Completá nombre, mail y celular.");
+  if (!datos.direccion.trim()) return error("Falta la dirección para el envío.");
+  if (datos.entrega === "montevideo") datos.departamento = "Montevideo";
+  if (!API) return error("La tienda todavía está en preparación. Muy pronto vas a poder pagar acá.");
+  const b = $("#pagar"); b.disabled = true; b.textContent = "Te llevamos a Mercado Pago…";
+  try {
+    // text/plain evita el preflight CORS que Apps Script no responde.
+    const r = await fetch(API, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ accion: "pedido", items: carrito, comprador: datos }) });
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || "No se pudo crear el pago.");
+    location.href = j.url;
+  } catch (e) {
+    error(e.message + " Probá de nuevo en un rato o escribinos.");
+    b.disabled = false; b.textContent = "Pagar con Mercado Pago";
+  }
+}
+
+async function cargarStock() {
+  if (!API) return;
+  try {
+    const j = await (await fetch(API + "?accion=stock")).json();
+    if (j.ok && j.productos && j.productos.length) catalogo = j.productos;
+  } catch (e) { /* queda el respaldo */ }
+}
+
+function estadoDeVuelta() {
+  const e = new URLSearchParams(location.search).get("estado");
+  if (e === "ok") aviso("¡Gracias! El pago se aprobó. Te llega la confirmación por mail y te escribimos para la entrega.");
+  else if (e === "pendiente") aviso("Tu pago quedó pendiente en Mercado Pago. Cuando se acredite te llega la confirmación por mail.");
+  else if (e === "error") aviso("El pago no se completó. No se te cobró nada; podés intentar de nuevo.");
+}
+
+(async function () {
+  ["montevideo", "interior"].forEach(k => $("#txt-" + k).textContent = ENTREGAS[k].texto);
+  $("#departamento").innerHTML = ["Montevideo", ...DEPARTAMENTOS].map(d => `<option>${d}</option>`).join("");
+  document.querySelectorAll('input[name="entrega"]').forEach(r => r.onchange = pintarCarrito);
+  $("#form").onsubmit = pagar;
+  estadoDeVuelta();
+  await cargarStock();
+  pintarGrilla(); pintarCarrito();
+})();
+</script>
+</body>
+</html>
