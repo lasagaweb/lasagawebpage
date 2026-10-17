@@ -51,7 +51,10 @@ function hojaPedidos_() {
 // GET ?accion=stock → catálogo con stock para la página
 function doGet(e) {
   if ((e.parameter || {}).accion === 'stock') {
-    const productos = leerStock_().map(p => ({ id: p.id, nombre: p.nombre, desc: p.desc, img: p.img, precio: p.precio, stock: p.stock }));
+    // La página solo necesita saber si hay; el número real no se publica (regla de no mostrar cifras internas).
+    // El tope de 3 limita cuántas se agregan al carrito; crearPedido_ controla contra el stock real.
+    const tope = st => Object.fromEntries(Object.entries(st).map(([t, n]) => [t, Math.min(n, 3)]));
+    const productos = leerStock_().map(p => ({ id: p.id, nombre: p.nombre, desc: p.desc, img: p.img, precio: p.precio, stock: tope(p.stock) }));
     return json_({ ok: true, productos });
   }
   return json_({ ok: false });
