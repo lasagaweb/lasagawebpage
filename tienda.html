@@ -45,10 +45,9 @@ h1{font-size:clamp(34px,7vw,64px);line-height:1;font-weight:800;letter-spacing:.
 @media(max-width:560px){.grilla{grid-template-columns:1fr}}
 /* En pantalla ancha el pedido va a la derecha, fijo mientras se recorren las remeras. */
 @media(min-width:980px){
-  .tienda{display:grid;grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"grilla pedido" "datos pedido";column-gap:26px;align-items:start}
+  .tienda{display:grid;grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"grilla pedido";column-gap:26px;align-items:start}
   .grilla{grid-area:grilla}
   #carrito{grid-area:pedido;position:sticky;top:20px;margin:0;max-width:none;max-height:calc(100vh - 40px);overflow-y:auto}
-  #datos{grid-area:datos;margin:34px 0 0;max-width:none}
   .seguir{display:none}
   .barra{display:none!important}
 }
@@ -67,12 +66,23 @@ h1{font-size:clamp(34px,7vw,64px);line-height:1;font-weight:800;letter-spacing:.
 .agregar{margin-top:auto}
 .btn{display:inline-block;width:100%;padding:13px 16px;border:0;border-radius:6px;background:var(--bordo);color:#fff;font:700 15px var(--font);letter-spacing:.3px;cursor:pointer;transition:background .15s}
 .btn:hover:not(:disabled){background:var(--bordo-oscuro)}
+.btn[hidden]{display:none}
 .btn:disabled{background:#d9cbb9;color:#fff;cursor:not-allowed}
 .ultima{margin:0;font-size:13px;font-weight:600;color:var(--amber-oscuro)}
 .agotado{font-size:14px;color:var(--tinta-suave);font-style:italic}
 .carrito{background:var(--papel);border-radius:10px;box-shadow:0 8px 24px rgba(42,10,10,.08);padding:26px 26px;margin:34px auto 0;max-width:640px}
 .vacio{margin:0;font-size:15px;line-height:1.6;color:var(--tinta-suave)}
-.carrito a.btn{margin-top:18px;text-align:center;text-decoration:none}
+.carrito #a-datos{margin-top:18px}
+.datos{margin-top:20px;padding-top:18px;border-top:1px solid var(--linea);display:flex;flex-direction:column;gap:8px}
+.datos[hidden]{display:none}
+.datos h3{margin:0 0 4px;font-size:16px}
+.datos input:not([type=checkbox]){padding:9px 11px;font-size:14px}
+.datos .dos{display:grid;grid-template-columns:3fr 2fr;gap:8px}
+.datos .lista{margin-top:6px;font-size:14px}
+.datos .btn{margin-top:6px}
+.datos .chico{margin:4px 0 0;font-size:12px;line-height:1.5}
+.datos .error{margin:0}
+.oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .carrito h2{margin:0 0 16px;font-size:24px}
 .linea{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--linea);font-size:15px}
 .linea .nom{flex:1}
@@ -91,8 +101,6 @@ h1{font-size:clamp(34px,7vw,64px);line-height:1;font-weight:800;letter-spacing:.
 .barra .btn:hover{background:#d8a77e}
 body.con-barra{padding-bottom:76px}
 .total{display:flex;justify-content:space-between;font-size:20px;font-weight:700;padding:14px 0 4px}
-fieldset{border:0;padding:0;margin:24px 0 0}
-legend{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--amber-oscuro);margin-bottom:8px}
 label{display:block;font-size:14px;color:var(--tinta-suave);margin:12px 0 5px}
 input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid var(--linea);border-radius:6px;background:#fff;color:var(--tinta);font:15px var(--font)}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--bordo)}
@@ -129,42 +137,32 @@ footer p{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;col
         <div id="lineas"></div>
         <div class="total"><span>Total</span><span id="total"></span></div>
         <p class="seguir"><a href="#grilla">+ Sumar otra remera</a></p>
-        <a class="btn" id="a-datos" href="#datos">Completar mis datos</a>
+        <button class="btn" id="a-datos" type="button">Completar mis datos</button>
+
+        <form class="datos" id="datos" novalidate hidden>
+          <h3>Datos para el envío</h3>
+          <input type="hidden" name="entrega" value="montevideo">
+          <label class="oculto" for="nombre">Nombre y apellido</label>
+          <input id="nombre" name="nombre" autocomplete="name" placeholder="Nombre y apellido" required>
+          <label class="oculto" for="email">Mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="Mail" required>
+          <label class="oculto" for="telefono">Celular</label>
+          <input id="telefono" name="telefono" type="tel" autocomplete="tel" placeholder="Celular" required>
+          <div class="dos">
+            <label class="oculto" for="direccion">Dirección</label>
+            <input id="direccion" name="direccion" autocomplete="street-address" placeholder="Dirección">
+            <label class="oculto" for="localidad">Barrio</label>
+            <input id="localidad" name="localidad" placeholder="Barrio">
+          </div>
+          <label class="oculto" for="nota">Nota (opcional)</label>
+          <input id="nota" name="nota" placeholder="Nota para la entrega (opcional)">
+          <label class="opcion lista"><input type="checkbox" name="lista" value="si"> <span>Sumarme a la lista de La Saga<small>Lo que viene después, primero a vos. Te podés dar de baja cuando quieras.</small></span></label>
+          <p class="error" id="error" hidden></p>
+          <button class="btn" id="pagar" type="submit">Pagar con Mercado Pago</button>
+          <p class="chico">Pagás en Mercado Pago. Cuando se aprueba, te llega la confirmación por mail y te escribimos para coordinar la entrega.</p>
+        </form>
       </div>
     </aside>
-
-    <section class="carrito datos" id="datos" hidden>
-      <h2>Para el envío</h2>
-      <form id="form" novalidate>
-        <fieldset style="margin-top:0">
-          <legend>Entrega</legend>
-          <label class="opcion"><input type="radio" name="entrega" value="montevideo" checked> <span>Envío en Montevideo<small id="txt-montevideo"></small></span></label>
-        </fieldset>
-
-        <fieldset>
-          <legend>Tus datos</legend>
-          <label for="nombre">Nombre y apellido</label>
-          <input id="nombre" name="nombre" autocomplete="name" required>
-          <label for="email">Mail</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-          <label for="telefono">Celular</label>
-          <input id="telefono" name="telefono" type="tel" autocomplete="tel" required>
-          <div id="datos-envio">
-            <label for="direccion">Dirección</label>
-            <input id="direccion" name="direccion" autocomplete="street-address">
-            <label for="localidad">Barrio</label>
-            <input id="localidad" name="localidad">
-          </div>
-          <label for="nota">Algo que tengamos que saber (opcional)</label>
-          <textarea id="nota" name="nota" rows="2"></textarea>
-          <label class="opcion lista"><input type="checkbox" name="lista" value="si"> <span>Sumarme a la lista de La Saga<small>Lo que viene después, primero a vos. Te podés dar de baja cuando quieras.</small></span></label>
-        </fieldset>
-
-        <p class="error" id="error" hidden></p>
-        <p style="margin:22px 0 0"><button class="btn" id="pagar" type="submit">Pagar con Mercado Pago</button></p>
-        <p class="chico">El pago lo hacés en Mercado Pago. Cuando se aprueba, te llega la confirmación por mail y te escribimos para coordinar la entrega.</p>
-      </form>
-    </section>
     </div>
 
     <footer><p>La Saga · Montevideo</p></footer>
@@ -179,7 +177,7 @@ footer p{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;col
 const API = "https://script.google.com/macros/s/AKfycbx-jeZcuzdjlQreHdOU1Ibdmh4j7ZV8jNr_jdnCcNqiDNlviENLdjZ7tZoB6Cil9tEx/exec";
 const MONEDA = "$";
 const ENTREGAS = {
-  montevideo: { costo: 250, texto: "$250 más, te la llevamos a tu casa." }
+  montevideo: { costo: 250 }
 };
 const TALLES = ["S","M","L","XL","XXL"];
 
@@ -244,12 +242,11 @@ function pintarGrilla() {
   });
 }
 
-function entregaElegida() { return document.querySelector('input[name="entrega"]:checked').value; }
+function entregaElegida() { return "montevideo"; } // por ahora solo envío en Montevideo
 
 function pintarCarrito() {
   $("#vacio").hidden = carrito.length > 0;
   $("#pedido-lleno").hidden = carrito.length === 0;
-  $("#datos").hidden = carrito.length === 0;
   const cont = $("#lineas"); cont.innerHTML = "";
   let suma = 0;
   carrito.forEach((l, i) => {
@@ -268,7 +265,7 @@ function pintarCarrito() {
   const envio = ENTREGAS[entregaElegida()].costo;
   if (envio) {
     const d = document.createElement("div"); d.className = "linea";
-    d.innerHTML = `<span>Envío</span><span>${plata(envio)}</span>`; cont.appendChild(d);
+    d.innerHTML = `<span>Envío a tu casa (Montevideo)</span><span>${plata(envio)}</span>`; cont.appendChild(d);
   }
   $("#total").textContent = plata(suma + envio);
   if (!$("#pagar").disabled) $("#pagar").textContent = `Pagar ${plata(suma + envio)} con Mercado Pago`;
@@ -288,7 +285,7 @@ function error(t) { const e = $("#error"); e.textContent = t; e.hidden = !t; }
 
 async function pagar(ev) {
   ev.preventDefault(); error("");
-  const f = new FormData($("#form"));
+  const f = new FormData($("#datos"));
   const datos = Object.fromEntries(f.entries());
   datos.entrega = entregaElegida();
   if (!datos.nombre.trim() || !datos.telefono.trim() || !/^\S+@\S+\.\S+$/.test(datos.email)) return error("Completá nombre, mail y celular.");
@@ -325,10 +322,8 @@ function estadoDeVuelta() {
 }
 
 (async function () {
-  Object.keys(ENTREGAS).forEach(k => $("#txt-" + k).textContent = ENTREGAS[k].texto);
-  document.querySelectorAll('input[name="entrega"]').forEach(r => r.onchange = pintarCarrito);
-  $("#form").onsubmit = pagar;
-  $("#a-datos").onclick = () => setTimeout(() => $("#nombre").focus({ preventScroll: true }), 450);
+  $("#datos").onsubmit = pagar;
+  $("#a-datos").onclick = () => { $("#datos").hidden = false; $("#a-datos").hidden = true; $("#nombre").focus(); };
   if ("IntersectionObserver" in window)
     new IntersectionObserver(([e]) => { carritoALaVista = e.isIntersecting; pintarBarra(); }, { rootMargin: "0px 0px -35% 0px" }).observe($("#carrito"));
   estadoDeVuelta();
