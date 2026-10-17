@@ -15,13 +15,15 @@
  *   MAIL_FACTORIA     contacto@factoriamerch.com
  *   MAIL_BANDA        mail de La Saga que recibe copia
  *   URL_TIENDA        https://lasaga.co/tienda
+ *   EO_API_KEY        clave de la API de EmailOctopus (la carga Nico; sin ella no se suma nadie a la lista)
+ *   EO_LIST_ID        id de la lista principal de EmailOctopus («Audience»)
  */
 
 const PLANILLA_ID = '1plmi637otetx7OUpzPnSlAAmu-mnRJz3lFnbZsF7TWI';
 const TALLES = ['S', 'M', 'L', 'XL', 'XXL'];
 const ENVIO_MONTEVIDEO = 250; // lo que paga el comprador; a Factoría le llegan 200
 const COLUMNAS_PEDIDOS = ['pedido', 'fecha', 'estado', 'pago_mp', 'total', 'items', 'entrega',
-  'nombre', 'email', 'telefono', 'direccion', 'localidad', 'departamento', 'nota', 'avisado'];
+  'nombre', 'email', 'telefono', 'direccion', 'localidad', 'departamento', 'nota', 'avisado', 'lista'];
 
 function prop_(k) { return PropertiesService.getScriptProperties().getProperty(k) || ''; }
 function json_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
@@ -45,6 +47,8 @@ function leerStock_() {
 function hojaPedidos_() {
   let h = hoja_('Pedidos');
   if (!h) { h = SpreadsheetApp.openById(PLANILLA_ID).insertSheet('Pedidos'); h.appendRow(COLUMNAS_PEDIDOS); }
+  // Una hoja creada por una versión anterior puede no tener las columnas nuevas en el encabezado.
+  if (h.getLastColumn() < COLUMNAS_PEDIDOS.length) h.getRange(1, 1, 1, COLUMNAS_PEDIDOS.length).setValues([COLUMNAS_PEDIDOS]);
   return h;
 }
 
@@ -73,7 +77,7 @@ function crearPedido_(cuerpo) {
   try {
     const stock = leerStock_();
     const c = cuerpo.comprador || {};
-    if (!['montevideo', 'interior'].includes(c.entrega)) return json_({ ok: false, error: 'Entrega no válida.' });
+    if (c.entrega !== 'montevideo') return json_({ ok: false, error: 'Entrega no válida.' });
     const items = [];
     for (const it of (cuerpo.items || [])) {
       const p = stock.find(x => x.id === it.id);
@@ -107,7 +111,8 @@ function crearPedido_(cuerpo) {
     const fila = { pedido, fecha: new Date(), estado: 'esperando pago', pago_mp: '', total,
       items: JSON.stringify(items.filter(i => i.id !== 'envio').map(i => ({ id: i.id, talle: i.talle, cantidad: i.quantity, titulo: i.title }))),
       entrega: c.entrega, nombre: c.nombre, email: c.email, telefono: c.telefono, direccion: c.direccion || '',
-      localidad: c.localidad || '', departamento: c.departamento || '', nota: c.nota || '', avisado: '' };
+      localidad: c.localidad || '', departamento: c.departamento || '', nota: c.nota || '', avisado: '',
+      lista: c.lista === true ? 'sí' : 'no' };
     hojaPedidos_().appendRow(COLUMNAS_PEDIDOS.map(k => fila[k]));
     return json_({ ok: true, url: mp.init_point });
   } finally { lock.releaseLock(); }
@@ -146,6 +151,7 @@ function avisoMercadoPago_(e, cuerpo) {
     avisarFactoria_(pedido, faltante);
     avisarComprador_(pedido);
     h.getRange(i + 1, col('avisado') + 1).setValue(new Date());
+    if (pedido.lista === 'sí') h.getRange(i + 1, col('lista') + 1).setValue(sumarALista_(pedido));
   } finally { lock.releaseLock(); }
   return json_({ ok: true });
 }
@@ -167,9 +173,33 @@ function descontarStock_(items) {
   return faltante;
 }
 
+// Suma al comprador a la lista de EmailOctopus con la etiqueta «tienda» (API v2).
+// Devuelve lo que queda anotado en la columna «lista» del pedido, para ver si entró.
+function sumarALista_(p) {
+  const key = prop_('EO_API_KEY'), lista = prop_('EO_LIST_ID');
+  if (!key || !lista) return 'sí (pendiente: falta configurar EmailOctopus)';
+  const base = 'https://api.emailoctopus.com/lists/' + lista + '/contacts';
+  const auth = { Authorization: 'Bearer ' + key };
+  const nombre = String(p.nombre || '').trim().split(/\s+/)[0] || '';
+  const alta = UrlFetchApp.fetch(base, {
+    method: 'post', contentType: 'application/json', muteHttpExceptions: true, headers: auth,
+    payload: JSON.stringify({ email_address: p.email, fields: { FirstName: nombre }, tags: ['tienda'], status: 'subscribed' })
+  });
+  const codigo = alta.getResponseCode();
+  if (codigo < 300) return 'sí (sumado)';
+  if (codigo !== 409) return 'sí (error EmailOctopus ' + codigo + ')';
+  // Ya estaba en la lista: solo se le agrega la etiqueta. No se cambia su estado, así no se reinscribe a quien se dio de baja.
+  const md5 = Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, String(p.email).trim().toLowerCase())
+    .map(b => ('0' + (b & 0xff).toString(16)).slice(-2)).join('');
+  const etiqueta = UrlFetchApp.fetch(base + '/' + md5, {
+    method: 'put', contentType: 'application/json', muteHttpExceptions: true, headers: auth,
+    payload: JSON.stringify({ tags: { tienda: true } })
+  });
+  return etiqueta.getResponseCode() < 300 ? 'sí (ya estaba, etiquetado)' : 'sí (error EmailOctopus ' + etiqueta.getResponseCode() + ')';
+}
+
 function textoEntrega_(p) {
-  if (p.entrega === 'montevideo') return `Envío en Montevideo: ${p.direccion}, ${p.localidad}`;
-  return `DAC al interior: ${p.direccion}, ${p.localidad}, ${p.departamento} (paga el envío al recibir)`;
+  return `Envío en Montevideo: ${p.direccion}, ${p.localidad}`;
 }
 
 function avisarFactoria_(p, faltante) {
