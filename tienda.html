@@ -64,7 +64,21 @@ h1{font-size:clamp(34px,7vw,64px);line-height:1;font-weight:800;letter-spacing:.
 .carrito{background:var(--papel);border-radius:10px;box-shadow:0 8px 24px rgba(42,10,10,.08);padding:28px 28px;margin:44px auto 0;max-width:640px}
 .carrito h2{margin:0 0 16px;font-size:24px}
 .linea{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--linea);font-size:15px}
-.linea button{background:none;border:0;color:var(--tinta-suave);cursor:pointer;font-size:13px;text-decoration:underline}
+.linea .nom{flex:1}
+.cant{display:inline-flex;align-items:center;border:1.5px solid var(--linea);border-radius:6px;background:#fff}
+.cant button{width:34px;height:32px;border:0;background:none;color:var(--tinta);font:600 18px var(--font);cursor:pointer}
+.cant button:disabled{color:#d3c6b6;cursor:not-allowed}
+.cant b{min-width:22px;text-align:center;font-size:15px}
+.linea .sub{min-width:74px;text-align:right}
+.seguir{margin:12px 0 0;font-size:15px;font-weight:600}
+.seguir a{text-decoration:none}
+.ya{margin:0;font-size:13px;font-weight:600;color:var(--bordo)}
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--bordo-oscuro);color:#f5e6d0;box-shadow:0 -6px 20px rgba(0,0,0,.18);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.barra[hidden]{display:none}
+.barra-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600}
+.barra .btn{width:auto;padding:11px 20px;background:var(--amber);color:var(--tinta);text-decoration:none}
+.barra .btn:hover{background:#d8a77e}
+body.con-barra{padding-bottom:76px}
 .total{display:flex;justify-content:space-between;font-size:20px;font-weight:700;padding:14px 0 4px}
 fieldset{border:0;padding:0;margin:24px 0 0}
 legend{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--amber-oscuro);margin-bottom:8px}
@@ -100,6 +114,7 @@ footer p{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;col
       <h2>Tu pedido</h2>
       <div id="lineas"></div>
       <div class="total"><span>Total</span><span id="total"></span></div>
+      <p class="seguir"><a href="#grilla">+ Sumar otra remera</a></p>
 
       <form id="form" novalidate>
         <fieldset>
@@ -135,6 +150,10 @@ footer p{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;col
     <footer><p>La Saga · Montevideo</p></footer>
   </div>
 
+  <div class="barra" id="barra" hidden>
+    <div class="barra-in"><span id="barra-txt"></span><a class="btn" href="#carrito">Ver pedido</a></div>
+  </div>
+
 <script>
 // Configuración de la tienda. API es la URL del Apps Script publicado; vacía = tienda en vista previa, sin cobrar.
 const API = "https://script.google.com/macros/s/AKfycbx-jeZcuzdjlQreHdOU1Ibdmh4j7ZV8jNr_jdnCcNqiDNlviENLdjZ7tZoB6Cil9tEx/exec";
@@ -154,6 +173,8 @@ const CATALOGO = [
 
 let catalogo = CATALOGO;
 const carrito = []; // { id, talle, cantidad }
+const seleccion = {}; // talle elegido en cada remera; se mantiene al repintar para poder sumar otra igual
+let carritoALaVista = false;
 const $ = s => document.querySelector(s);
 const plata = n => MONEDA + n.toLocaleString("es-UY");
 
@@ -170,30 +191,33 @@ function pintarGrilla() {
     const el = document.createElement("article"); el.className = "prod";
     el.innerHTML = `<img src="${p.img}" alt="${p.nombre}, frente y espalda" loading="lazy">
       <div class="cuerpo"><h2>${p.nombre}</h2><p class="desc">${p.desc}</p><div class="precio">${plata(p.precio)}</div>
-      ${hay ? `<div class="talles" role="group" aria-label="Talle"></div><p class="ultima" hidden>Última de este talle</p><div class="agregar"><button class="btn" disabled>Elegí un talle</button></div>`
+      ${hay ? `<div class="talles" role="group" aria-label="Talle"></div><p class="ultima" hidden>Última de este talle</p><div class="agregar"><button class="btn" disabled>Elegí un talle</button></div><p class="ya" hidden></p>`
             : `<p class="agotado">Agotada</p>`}</div>`;
     if (hay) {
-      let elegido = null;
+      const libre = t => (p.stock[t] || 0) - enCarrito(p.id, t);
+      let elegido = seleccion[p.id] && libre(seleccion[p.id]) > 0 ? seleccion[p.id] : null;
       const fila = el.querySelector(".talles"), btn = el.querySelector(".agregar .btn"), ultima = el.querySelector(".ultima");
+      const marcar = () => {
+        fila.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x.textContent === elegido));
+        btn.disabled = !elegido;
+        btn.textContent = elegido ? "Agregar talle " + elegido : "Elegí un talle";
+        ultima.hidden = !elegido || libre(elegido) !== 1;
+      };
       TALLES.forEach(t => {
         const b = document.createElement("button"); b.type = "button"; b.textContent = t;
-        const libre = (p.stock[t] || 0) - enCarrito(p.id, t);
-        b.disabled = libre <= 0; b.setAttribute("aria-pressed", "false");
-        if (libre <= 0) b.title = "Agotado"; else if (libre === 1) b.title = "Última de este talle";
-        b.onclick = () => {
-          elegido = t;
-          fila.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
-          btn.disabled = false; btn.textContent = "Agregar talle " + t;
-          ultima.hidden = (p.stock[t] || 0) - enCarrito(p.id, t) !== 1;
-        };
+        b.disabled = libre(t) <= 0;
+        if (libre(t) <= 0) b.title = "Agotado"; else if (libre(t) === 1) b.title = "Última de este talle";
+        b.onclick = () => { elegido = t; seleccion[p.id] = t; marcar(); };
         fila.appendChild(b);
       });
+      marcar();
+      const ya = carrito.filter(l => l.id === p.id).reduce((s, l) => s + l.cantidad, 0);
+      if (ya) { const y = el.querySelector(".ya"); y.hidden = false; y.textContent = `✓ En tu pedido: ${ya}`; }
       btn.onclick = () => {
-        if (!elegido) return;
+        if (!elegido || libre(elegido) <= 0) return;
         const l = carrito.find(x => x.id === p.id && x.talle === elegido);
         if (l) l.cantidad++; else carrito.push({ id: p.id, talle: elegido, cantidad: 1 });
         pintarGrilla(); pintarCarrito();
-        $("#carrito").scrollIntoView({ behavior: "smooth", block: "start" });
       };
     }
     g.appendChild(el);
@@ -209,8 +233,14 @@ function pintarCarrito() {
   carrito.forEach((l, i) => {
     const p = catalogo.find(x => x.id === l.id); const sub = p.precio * l.cantidad; suma += sub;
     const d = document.createElement("div"); d.className = "linea";
-    d.innerHTML = `<span>${p.nombre} · talle ${l.talle} × ${l.cantidad}</span><span>${plata(sub)} <button type="button">quitar</button></span>`;
-    d.querySelector("button").onclick = () => { carrito.splice(i, 1); pintarGrilla(); pintarCarrito(); };
+    d.innerHTML = `<span class="nom">${p.nombre} · talle ${l.talle}</span>
+      <span class="cant"><button type="button" aria-label="Una menos">−</button><b>${l.cantidad}</b><button type="button" aria-label="Una más">+</button></span>
+      <span class="sub">${plata(sub)}</span>`;
+    const [menos, mas] = d.querySelectorAll(".cant button");
+    menos.onclick = () => { if (l.cantidad > 1) l.cantidad--; else carrito.splice(i, 1); pintarGrilla(); pintarCarrito(); };
+    mas.disabled = (p.stock[l.talle] || 0) - enCarrito(l.id, l.talle) <= 0;
+    if (mas.disabled) mas.title = "No quedan más de este talle";
+    mas.onclick = () => { l.cantidad++; pintarGrilla(); pintarCarrito(); };
     cont.appendChild(d);
   });
   const envio = ENTREGAS[entregaElegida()].costo;
@@ -219,6 +249,16 @@ function pintarCarrito() {
     d.innerHTML = `<span>Envío</span><span>${plata(envio)}</span>`; cont.appendChild(d);
   }
   $("#total").textContent = plata(suma + envio);
+  const n = carrito.reduce((s, l) => s + l.cantidad, 0);
+  $("#barra-txt").textContent = `${n} remera${n === 1 ? "" : "s"} · Total ${plata(suma + envio)}`;
+  pintarBarra();
+}
+
+// La barra de abajo avisa que hay un pedido armado; se esconde cuando el pedido ya está a la vista.
+function pintarBarra() {
+  const ver = carrito.length > 0 && !carritoALaVista;
+  $("#barra").hidden = !ver;
+  document.body.classList.toggle("con-barra", ver);
 }
 
 function error(t) { const e = $("#error"); e.textContent = t; e.hidden = !t; }
@@ -265,6 +305,8 @@ function estadoDeVuelta() {
   Object.keys(ENTREGAS).forEach(k => $("#txt-" + k).textContent = ENTREGAS[k].texto);
   document.querySelectorAll('input[name="entrega"]').forEach(r => r.onchange = pintarCarrito);
   $("#form").onsubmit = pagar;
+  if ("IntersectionObserver" in window)
+    new IntersectionObserver(([e]) => { carritoALaVista = e.isIntersecting; pintarBarra(); }, { rootMargin: "0px 0px -35% 0px" }).observe($("#carrito"));
   estadoDeVuelta();
   await cargarStock();
   pintarGrilla(); pintarCarrito();
